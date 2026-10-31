@@ -1,0 +1,187 @@
+# German translation of RMD Site Settings (formal "Sie").
+msgid ""
+msgstr ""
+"Project-Id-Version: RMD Site Settings 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/reicheltmediadesign/wordpress-rmd-site-settings/issues\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: rmd-site-settings\n"
+
+msgid "Basic site settings in one place: disable comments globally or per post type, switch off XML-RPC, clean up wp_head and tidy the dashboard."
+msgstr "Basis-Einstellungen an einer Stelle: Kommentare global oder pro Inhaltstyp deaktivieren, XML-RPC abschalten, wp_head aufräumen und das Dashboard entschlacken."
+
+msgid "RMD Site Settings requires PHP %1$s or newer. This site runs PHP %2$s, so the plugin stays inactive."
+msgstr "RMD Site Settings benötigt PHP %1$s oder neuer. Diese Website läuft mit PHP %2$s, daher bleibt das Plugin inaktiv."
+
+msgid "Site settings"
+msgstr "Website-Einstellungen"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Delete these comments permanently? This cannot be undone."
+msgstr "Diese Kommentare endgültig löschen? Das lässt sich nicht rückgängig machen."
+
+msgid "Comments"
+msgstr "Kommentare"
+
+msgid "XML-RPC"
+msgstr "XML-RPC"
+
+msgid "Page head"
+msgstr "Seitenkopf"
+
+msgid "Admin area"
+msgstr "Adminbereich"
+
+msgid "You are not allowed to access this page."
+msgstr "Sie dürfen diese Seite nicht aufrufen."
+
+msgid "%s comment deleted."
+msgid_plural "%s comments deleted."
+msgstr[0] "%s Kommentar gelöscht."
+msgstr[1] "%s Kommentare gelöscht."
+
+msgid "Nothing was deleted: choose what to delete."
+msgstr "Nichts gelöscht: Bitte wählen Sie aus, was gelöscht werden soll."
+
+msgid "Nothing was deleted: please confirm that the comments will be deleted permanently."
+msgstr "Nichts gelöscht: Bitte bestätigen Sie, dass die Kommentare endgültig gelöscht werden."
+
+msgid "Enabled (WordPress default)"
+msgstr "Aktiviert (WordPress-Standard)"
+
+msgid "Disabled everywhere"
+msgstr "Überall deaktiviert"
+
+msgid "Also removes the Comments menu, the discussion settings, comment feeds, the comments REST endpoint and comment blocks."
+msgstr "Entfernt auch das Menü „Kommentare“, die Diskussions-Einstellungen, Kommentar-Feeds, den REST-Endpunkt für Kommentare und die Kommentar-Blöcke."
+
+msgid "Disabled for selected post types"
+msgstr "Für ausgewählte Inhaltstypen deaktiviert"
+
+msgid "Post types"
+msgstr "Inhaltstypen"
+
+msgid "Existing comments"
+msgstr "Bestehende Kommentare"
+
+msgid "Keep showing existing comments"
+msgstr "Bestehende Kommentare weiter anzeigen"
+
+msgid "New comments are not possible, but approved comments stay visible and can still be moderated."
+msgstr "Neue Kommentare sind nicht möglich, freigegebene Kommentare bleiben aber sichtbar und lassen sich weiter moderieren."
+
+msgid "Disable XML-RPC"
+msgstr "XML-RPC deaktivieren"
+
+msgid "xmlrpc.php answers no requests, pingbacks are off and the RSD link is removed. Leave this off if you use the Jetpack plugin or an app that publishes via XML-RPC."
+msgstr "xmlrpc.php beantwortet keine Anfragen mehr, Pingbacks sind aus und der RSD-Link wird entfernt. Lassen Sie diese Option aus, wenn Sie Jetpack oder eine App nutzen, die über XML-RPC veröffentlicht."
+
+msgid "Emoji script"
+msgstr "Emoji-Skript"
+
+msgid "Browsers show emoji natively; removes the detection script, its styles and the DNS prefetch to s.w.org."
+msgstr "Browser stellen Emojis selbst dar; entfernt das Erkennungsskript, seine Styles und den DNS-Prefetch zu s.w.org."
+
+msgid "Generator tag"
+msgstr "Generator-Tag"
+
+msgid "Hides the WordPress version in the page source and feeds."
+msgstr "Blendet die WordPress-Version im Quelltext und in Feeds aus."
+
+msgid "Shortlink"
+msgstr "Kurzlink"
+
+msgid "Removes the ?p= shortlink from the page head and the HTTP headers."
+msgstr "Entfernt den ?p=-Kurzlink aus dem Seitenkopf und den HTTP-Headern."
+
+msgid "oEmbed discovery links"
+msgstr "oEmbed-Discovery-Links"
+
+msgid "Other sites can still embed your posts by URL."
+msgstr "Andere Websites können Ihre Beiträge weiterhin per URL einbetten."
+
+msgid "REST API link"
+msgstr "REST-API-Link"
+
+msgid "Removes the link to the REST API from the page head and the HTTP headers. The REST API itself keeps working."
+msgstr "Entfernt den Link zur REST-API aus dem Seitenkopf und den HTTP-Headern. Die REST-API selbst funktioniert weiter."
+
+msgid "RSD link"
+msgstr "RSD-Link"
+
+msgid "Only used by XML-RPC clients."
+msgstr "Wird nur von XML-RPC-Clients genutzt."
+
+msgid "Remove"
+msgstr "Entfernen"
+
+msgid "Welcome panel"
+msgstr "Willkommensbereich"
+
+msgid "Hide the welcome panel on the dashboard"
+msgstr "Willkommensbereich im Dashboard ausblenden"
+
+msgid "Events and news"
+msgstr "Veranstaltungen und Neuigkeiten"
+
+msgid "Hide the \"WordPress Events and News\" widget"
+msgstr "Widget „WordPress-Veranstaltungen und Neuigkeiten“ ausblenden"
+
+msgid "Quick draft"
+msgstr "Schneller Entwurf"
+
+msgid "Hide the \"Quick Draft\" widget"
+msgstr "Widget „Schneller Entwurf“ ausblenden"
+
+msgid "Footer text"
+msgstr "Fußzeilentext"
+
+msgid "Replaces \"Thank you for creating with WordPress\" at the bottom of every admin page. Allowed HTML: a, strong, em. Leave empty for the default text."
+msgstr "Ersetzt den Text „Danke für … Vertrauen in WordPress.“ unten auf jeder Admin-Seite. Erlaubtes HTML: a, strong, em. Leer lassen für den Standardtext."
+
+msgid "Delete comments"
+msgstr "Kommentare löschen"
+
+msgid "Deletes existing comments, trackbacks and pingbacks permanently from the database. Notes in the block editor are kept. Make a backup first."
+msgstr "Löscht bestehende Kommentare, Trackbacks und Pingbacks endgültig aus der Datenbank. Notizen im Block-Editor bleiben erhalten. Legen Sie vorher ein Backup an."
+
+msgid "There are no comments."
+msgstr "Es gibt keine Kommentare."
+
+msgid "What to delete"
+msgstr "Was löschen"
+
+msgid "All comments"
+msgstr "Alle Kommentare"
+
+msgid "Comments on selected post types"
+msgstr "Kommentare zu ausgewählten Inhaltstypen"
+
+msgid "Spam only"
+msgstr "Nur Spam"
+
+msgid "Confirmation"
+msgstr "Bestätigung"
+
+msgid "I understand that the comments are deleted permanently."
+msgstr "Mir ist klar, dass die Kommentare endgültig gelöscht werden."
+
+msgid "Comments are disabled on this site."
+msgstr "Kommentare sind auf dieser Website deaktiviert."
+
+msgid "Comments are disabled for: %s. Settings on this page do not apply to them."
+msgstr "Kommentare sind deaktiviert für: %s. Die Einstellungen auf dieser Seite gelten dafür nicht."
+
+msgid "Change in Site settings"
+msgstr "In den Website-Einstellungen ändern"
+
+msgid "No post type selected: comments stay enabled everywhere until you select at least one."
+msgstr "Kein Inhaltstyp ausgewählt: Kommentare bleiben überall aktiv, bis Sie mindestens einen auswählen."
+
+msgid "XML-RPC is disabled on this site."
+msgstr "XML-RPC ist auf dieser Website deaktiviert."

@@ -1,0 +1,36 @@
+/*
+ * RMD Site Settings – settings page (Settings → Site settings).
+ * Classes:
+ *   .rmd-ss                    page wrapper (.wrap)
+ *   .rmd-ss-mode               fieldset of the comment modes
+ *   .rmd-ss-indent             description below a radio option
+ *   .rmd-ss-post-types         row with the post types of the comment mode
+ *   .rmd-ss-cleanup            form of the delete tool
+ *   .rmd-ss-delete-post-types  row with the post types of the delete tool
+ *   .rmd-ss-count              number of comments next to an option
+ *   .rmd-ss-hidden             row hidden by admin.js
+ */
+
+.rmd-ss .rmd-ss-indent {
+	margin: 0 0 6px 24px;
+}
+
+.rmd-ss .rmd-ss-count {
+	color: #646970;
+}
+
+.rmd-ss .rmd-ss-hidden {
+	display: none;
+}
+
+.rmd-ss .rmd-ss-cleanup .button.delete {
+	border-color: #d63638;
+	color: #d63638;
+}
+
+.rmd-ss .rmd-ss-cleanup .button.delete:hover,
+.rmd-ss .rmd-ss-cleanup .button.delete:focus {
+	background: #d63638;
+	border-color: #d63638;
+	color: #fff;
+}
