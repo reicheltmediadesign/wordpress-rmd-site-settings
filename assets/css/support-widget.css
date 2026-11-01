@@ -2,57 +2,52 @@
  * RMD Site Settings – "Need help or support?" dashboard widget (#rmd_ss_support).
  * Classes:
  *   .rmd-ss-support          widget content wrapper
- *   .rmd-ss-support-brand    coloured bar with logo and company name
- *   .rmd-ss-support-logo     logo image (white, assets/images/rmd-logo.svg)
- *   .rmd-ss-support-company  company name next to the logo
+ *   .rmd-ss-support-brand    row with logo and info button
+ *   .rmd-ss-support-logo     logo image (assets/images/rmd-logo.svg)
+ *   .rmd-ss-support-info     info button, links to the website
  *   .rmd-ss-support-intro    short help text
- *   .rmd-ss-support-address  postal address
- *   .rmd-ss-support-links    list of phone, email and website
+ *   .rmd-ss-support-actions  row of contact buttons
+ *   .rmd-ss-support-button   contact button (email is .button-primary)
  */
-
-#rmd_ss_support .inside {
-	margin: 0;
-	padding: 0;
-}
 
 .rmd-ss-support-brand {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
+	justify-content: space-between;
 	gap: 12px;
-	padding: 16px 12px;
-	background: #cb300b;
-	color: #fff;
+	margin-top: 4px;
 }
 
 .rmd-ss-support-logo {
-	flex: none;
-	width: 48px;
+	width: 120px;
 	height: auto;
 }
 
-.rmd-ss-support-company {
-	font-size: 16px;
-	font-weight: 600;
+.rmd-ss-support-info {
+	color: #646970;
+	text-decoration: none;
 }
 
-.rmd-ss-support-intro,
-.rmd-ss-support-address,
-.rmd-ss-support-links {
-	margin: 12px;
+.rmd-ss-support-info:hover,
+.rmd-ss-support-info:focus {
+	color: #2271b1;
 }
 
-.rmd-ss-support-links {
-	padding: 0;
-	list-style: none;
-}
-
-.rmd-ss-support-links li {
+.rmd-ss-support-actions {
 	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.rmd-ss-support .rmd-ss-support-button {
+	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	margin: 0 0 6px;
 }
 
-.rmd-ss-support-links .dashicons {
-	color: #cb300b;
+.rmd-ss-support-button .dashicons {
+	font-size: 16px;
+	line-height: 1;
+	width: 16px;
+	height: 16px;
 }

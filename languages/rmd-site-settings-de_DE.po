@@ -1,7 +1,7 @@
 # German translation of RMD Site Settings (formal "Sie").
 msgid ""
 msgstr ""
-"Project-Id-Version: RMD Site Settings 0.2.0\n"
+"Project-Id-Version: RMD Site Settings 0.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/reicheltmediadesign/wordpress-rmd-site-settings/issues\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -201,11 +201,11 @@ msgstr "Benötigen Sie Hilfe oder Unterstützung?"
 msgid "Questions about your website, a change you would like or something is not working? I am happy to help."
 msgstr "Sie haben Fragen zu Ihrer Website, wünschen eine Änderung oder etwas funktioniert nicht? Ich helfe Ihnen gern weiter."
 
-msgid "Phone"
-msgstr "Telefon"
+msgid "About %s (opens the website in a new tab)"
+msgstr "Über %s (öffnet die Website in einem neuen Tab)"
 
-msgid "Email"
-msgstr "E-Mail"
+msgid "Write an email"
+msgstr "E-Mail schreiben"
 
-msgid "Website"
-msgstr "Website"
+msgid "Call %s"
+msgstr "%s anrufen"
