@@ -1,7 +1,7 @@
 # German translation of RMD Site Settings (formal "Sie").
 msgid ""
 msgstr ""
-"Project-Id-Version: RMD Site Settings 0.1.0\n"
+"Project-Id-Version: RMD Site Settings 0.2.0\n"
 "Report-Msgid-Bugs-To: https://github.com/reicheltmediadesign/wordpress-rmd-site-settings/issues\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"

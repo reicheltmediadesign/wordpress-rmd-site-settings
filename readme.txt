@@ -4,7 +4,7 @@ Tags: disable comments, xmlrpc, wp_head, dashboard, settings
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,9 @@ No. Notes (WordPress 6.9+) are stored as comments of the type "note"; they keep 
 Everything returns to the WordPress defaults. Comments deleted with the delete tool stay deleted.
 
 == Changelog ==
+
+= 0.2.0 =
+* New: dashboard widget "Need help or support?" with the contact details of reichelt media.design, on by default.
 
 = 0.1.0 =
 * Initial release.
