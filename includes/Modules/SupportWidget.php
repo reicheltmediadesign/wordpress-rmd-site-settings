@@ -72,10 +72,9 @@ final class SupportWidget {
 		echo '<p class="rmd-ss-support-intro">' . esc_html__( 'Questions about your website, a change you would like or something is not working? I am happy to help.', 'rmd-site-settings' ) . '</p>';
 
 		echo '<p class="rmd-ss-support-actions">';
-		self::button( 'email', __( 'Write an email', 'rmd-site-settings' ), 'mailto:' . self::EMAIL, self::EMAIL, true );
+		self::button( __( 'Write an email', 'rmd-site-settings' ), 'mailto:' . self::EMAIL, self::EMAIL, true );
 		self::button(
-			'phone',
-			self::PHONE,
+			__( 'Call', 'rmd-site-settings' ),
 			self::TEL_URI,
 			/* translators: %s: phone number */
 			sprintf( __( 'Call %s', 'rmd-site-settings' ), self::PHONE )
@@ -85,13 +84,12 @@ final class SupportWidget {
 		echo '</div>';
 	}
 
-	private static function button( string $icon, string $text, string $url, string $title, bool $primary = false ): void {
+	private static function button( string $text, string $url, string $title, bool $primary = false ): void {
 		printf(
-			'<a href="%s" class="button%s rmd-ss-support-button" title="%s"><span class="dashicons dashicons-%s" aria-hidden="true"></span>%s</a>',
+			'<a href="%s" class="button%s rmd-ss-support-button" title="%s">%s</a>',
 			esc_url( $url, [ 'mailto', 'tel' ] ),
 			$primary ? ' button-primary' : '',
 			esc_attr( $title ),
-			esc_attr( $icon ),
 			esc_html( $text )
 		);
 	}

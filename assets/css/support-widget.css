@@ -38,16 +38,3 @@
 	flex-wrap: wrap;
 	gap: 8px;
 }
-
-.rmd-ss-support .rmd-ss-support-button {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-}
-
-.rmd-ss-support-button .dashicons {
-	font-size: 16px;
-	line-height: 1;
-	width: 16px;
-	height: 16px;
-}

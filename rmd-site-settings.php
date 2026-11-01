@@ -3,7 +3,7 @@
  * Plugin Name:       RMD Site Settings
  * Plugin URI:        https://github.com/reicheltmediadesign/wordpress-rmd-site-settings
  * Description:       Basic site settings in one place: disable comments globally or per post type, switch off XML-RPC, clean up wp_head and tidy the dashboard.
- * Version:           0.2.1
+ * Version:           0.2.2
  * Requires at least: 6.8
  * Requires PHP:      8.1
  * Author:            Philipp Reichelt, reichelt media.design
@@ -21,7 +21,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'RMD_SS_VERSION', '0.2.1' );
+define( 'RMD_SS_VERSION', '0.2.2' );
 define( 'RMD_SS_FILE', __FILE__ );
 define( 'RMD_SS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RMD_SS_URL', plugin_dir_url( __FILE__ ) );
