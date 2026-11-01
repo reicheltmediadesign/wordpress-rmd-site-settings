@@ -5,6 +5,10 @@ All notable changes to this plugin are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Admin area: dashboard widget "Need help or support?" with the contact details of reichelt media.design. On by default for all users, can be switched off in the settings or hidden per user under Screen Options. Logo and contact details ship with the plugin.
+
 ## [0.1.0] – 2026-10-31
 
 ### Added

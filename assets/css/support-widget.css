@@ -1,0 +1,58 @@
+/*
+ * RMD Site Settings – "Need help or support?" dashboard widget (#rmd_ss_support).
+ * Classes:
+ *   .rmd-ss-support          widget content wrapper
+ *   .rmd-ss-support-brand    coloured bar with logo and company name
+ *   .rmd-ss-support-logo     logo image (white, assets/images/rmd-logo.svg)
+ *   .rmd-ss-support-company  company name next to the logo
+ *   .rmd-ss-support-intro    short help text
+ *   .rmd-ss-support-address  postal address
+ *   .rmd-ss-support-links    list of phone, email and website
+ */
+
+#rmd_ss_support .inside {
+	margin: 0;
+	padding: 0;
+}
+
+.rmd-ss-support-brand {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 16px 12px;
+	background: #cb300b;
+	color: #fff;
+}
+
+.rmd-ss-support-logo {
+	flex: none;
+	width: 48px;
+	height: auto;
+}
+
+.rmd-ss-support-company {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.rmd-ss-support-intro,
+.rmd-ss-support-address,
+.rmd-ss-support-links {
+	margin: 12px;
+}
+
+.rmd-ss-support-links {
+	padding: 0;
+	list-style: none;
+}
+
+.rmd-ss-support-links li {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0 0 6px;
+}
+
+.rmd-ss-support-links .dashicons {
+	color: #cb300b;
+}

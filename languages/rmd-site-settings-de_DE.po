@@ -185,3 +185,27 @@ msgstr "Kein Inhaltstyp ausgewählt: Kommentare bleiben überall aktiv, bis Sie 
 
 msgid "XML-RPC is disabled on this site."
 msgstr "XML-RPC ist auf dieser Website deaktiviert."
+
+msgid "Support widget"
+msgstr "Support-Widget"
+
+msgid "Show the \"Need help or support?\" widget on the dashboard"
+msgstr "Das Widget „Benötigen Sie Hilfe oder Unterstützung?“ im Dashboard anzeigen"
+
+msgid "Contact details of reichelt media.design for all users who can see the dashboard. Each user can still hide it under Screen Options."
+msgstr "Kontaktdaten von reichelt media.design für alle Benutzer, die das Dashboard sehen. Jeder Benutzer kann es über „Ansicht anpassen“ ausblenden."
+
+msgid "Need help or support?"
+msgstr "Benötigen Sie Hilfe oder Unterstützung?"
+
+msgid "Questions about your website, a change you would like or something is not working? I am happy to help."
+msgstr "Sie haben Fragen zu Ihrer Website, wünschen eine Änderung oder etwas funktioniert nicht? Ich helfe Ihnen gern weiter."
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Website"
+msgstr "Website"

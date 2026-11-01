@@ -65,6 +65,12 @@ final class SettingsTest extends TestCase {
 		$this->assertSame( Settings::FOOTER_TEXT_MAX, strlen( $parsed['admin']['footer_text'] ) );
 	}
 
+	public function test_support_widget_is_on_by_default(): void {
+		$this->assertTrue( Settings::defaults()['admin']['support_widget'] );
+		$this->assertTrue( Settings::parse( [ 'admin' => [ 'welcome_panel' => true ] ] )['admin']['support_widget'] );
+		$this->assertFalse( Settings::parse( [ 'admin' => [ 'support_widget' => '0' ] ] )['admin']['support_widget'] );
+	}
+
 	public function test_parse_is_idempotent(): void {
 		$once = Settings::parse( [ 'comments' => [ 'mode' => 'everywhere' ] ] );
 		$this->assertSame( $once, Settings::parse( $once ) );
