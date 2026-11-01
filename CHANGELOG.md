@@ -5,6 +5,12 @@ All notable changes to this plugin are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.1] – 2026-11-01
+
+### Changed
+
+- Support widget: calmer design without the coloured bar, full logo with an info button that links to the website, email and phone as buttons side by side (email first). The postal address is no longer shown.
+
 ## [0.2.0] – 2026-11-01
 
 ### Added
