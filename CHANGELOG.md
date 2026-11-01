@@ -5,6 +5,12 @@ All notable changes to this plugin are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.2] – 2026-11-01
+
+### Fixed
+
+- Support widget: buttons without icons ("Write an email", "Call"); the icons were misaligned on some sites.
+
 ## [0.2.1] – 2026-11-01
 
 ### Changed
