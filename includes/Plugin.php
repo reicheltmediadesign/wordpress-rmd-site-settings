@@ -32,6 +32,7 @@ final class Plugin {
 		Modules\Xmlrpc::init();
 		Modules\HeadCleanup::init();
 		Modules\AdminArea::init();
+		Modules\SupportWidget::init();
 
 		if ( is_admin() ) {
 			Modules\CommentCleanup::init();

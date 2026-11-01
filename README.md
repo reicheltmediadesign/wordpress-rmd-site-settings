@@ -1,6 +1,6 @@
 # RMD Site Settings
 
-Basic WordPress site settings in one place, for administrators: disable comments globally or per post type, switch off XML-RPC, clean up `wp_head` and tidy the dashboard. Every switch is off until you turn it on, and deactivating the plugin brings back the WordPress defaults.
+Basic WordPress site settings in one place, for administrators: disable comments globally or per post type, switch off XML-RPC, clean up `wp_head` and tidy the dashboard. Every switch is off until you turn it on (except the support widget), and deactivating the plugin brings back the WordPress defaults.
 
 ## Features
 
@@ -10,6 +10,7 @@ Basic WordPress site settings in one place, for administrators: disable comments
 - **Notes stay intact** – notes in the block editor (WordPress 6.9+) are comments of the type `note`; they keep working and are never deleted.
 - **XML-RPC** – switch off `xmlrpc.php` completely.
 - **Page head** – remove the emoji script, generator tag, shortlink, oEmbed discovery links, REST API link and RSD link.
+- **Support widget** – a dashboard widget "Need help or support?" with the contact details of reichelt media.design. On by default; logo and contact details ship with the plugin, nothing is loaded from outside.
 - **Admin area** – hide the welcome panel and the "WordPress Events and News" and "Quick Draft" widgets, set an own admin footer text.
 
 ## Usage
@@ -60,6 +61,7 @@ The delete tool is at the bottom of the **Comments** tab. Choose what to delete,
 
 | Setting | Default | Description |
 | --- | --- | --- |
+| Support widget | on | Shows the "Need help or support?" widget with the contact details of reichelt media.design on the dashboard of every user. Each user can hide it under *Screen Options*. |
 | Welcome panel | shown | Hides the welcome panel on the dashboard. |
 | Events and news | shown | Hides the "WordPress Events and News" widget. |
 | Quick draft | shown | Hides the "Quick Draft" widget. |
@@ -67,7 +69,7 @@ The delete tool is at the bottom of the **Comments** tab. Choose what to delete,
 
 ## Privacy
 
-The plugin stores its settings in the option `rmd_ss_settings` and sends no data anywhere. The only outgoing request is the update check, which reads `update.json` from the GitHub releases of this repository.
+The plugin stores its settings in the option `rmd_ss_settings` and sends no data anywhere. The support widget shows contact details and a logo that ship with the plugin; nothing is loaded from other servers. The only outgoing request is the update check, which reads `update.json` from the GitHub releases of this repository.
 
 ## Installation
 

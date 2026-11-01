@@ -231,6 +231,13 @@ final class SettingsPage {
 	}
 
 	private static function render_admin(): void {
+		self::checkbox_row(
+			'admin',
+			'support_widget',
+			__( 'Support widget', 'rmd-site-settings' ),
+			__( 'Show the "Need help or support?" widget on the dashboard', 'rmd-site-settings' ),
+			__( 'Contact details of reichelt media.design for all users who can see the dashboard. Each user can still hide it under Screen Options.', 'rmd-site-settings' )
+		);
 		self::checkbox_row( 'admin', 'welcome_panel', __( 'Welcome panel', 'rmd-site-settings' ), __( 'Hide the welcome panel on the dashboard', 'rmd-site-settings' ) );
 		self::checkbox_row( 'admin', 'events_news', __( 'Events and news', 'rmd-site-settings' ), __( 'Hide the "WordPress Events and News" widget', 'rmd-site-settings' ) );
 		self::checkbox_row( 'admin', 'quick_draft', __( 'Quick draft', 'rmd-site-settings' ), __( 'Hide the "Quick Draft" widget', 'rmd-site-settings' ) );

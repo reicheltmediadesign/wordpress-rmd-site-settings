@@ -12,13 +12,14 @@ Basic site settings in one place: disable comments, switch off XML-RPC, clean up
 
 == Description ==
 
-RMD Site Settings collects basic switches that most business sites need, on one settings page for administrators. Every part is off until you switch it on.
+RMD Site Settings collects basic switches that most business sites need, on one settings page for administrators. Every part is off until you switch it on, except the support widget.
 
 * Disable comments everywhere or for selected post types: comment forms, trackbacks and pingbacks, the Comments menu, discussion settings, comment feeds, the comments REST endpoint, the Recent Comments widget and the comment blocks.
 * Optionally keep showing existing comments while no new ones can be written.
 * Delete existing comments: all, by post type or spam only. Notes in the block editor are kept.
 * Disable XML-RPC completely.
 * Remove the emoji script, generator tag, shortlink, oEmbed discovery links, REST API link and RSD link from the page head.
+* Dashboard widget "Need help or support?" with the contact details of reichelt media.design (on by default, no external requests).
 * Hide the welcome panel, the "WordPress Events and News" and "Quick Draft" widgets and set an own admin footer text.
 
 == Installation ==

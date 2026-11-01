@@ -24,7 +24,7 @@ final class Settings {
 	 *     comments: array{mode: string, post_types: list<string>, keep_existing: bool},
 	 *     xmlrpc: array{disable: bool},
 	 *     head: array{emoji: bool, generator: bool, shortlink: bool, oembed_links: bool, rest_link: bool, rsd: bool},
-	 *     admin: array{welcome_panel: bool, events_news: bool, quick_draft: bool, footer_text: string}
+	 *     admin: array{support_widget: bool, welcome_panel: bool, events_news: bool, quick_draft: bool, footer_text: string}
 	 * }
 	 */
 	public static function defaults(): array {
@@ -46,10 +46,11 @@ final class Settings {
 				'rsd'          => false,
 			],
 			'admin'    => [
-				'welcome_panel' => false,
-				'events_news'   => false,
-				'quick_draft'   => false,
-				'footer_text'   => '',
+				'support_widget' => true,
+				'welcome_panel'  => false,
+				'events_news'    => false,
+				'quick_draft'    => false,
+				'footer_text'    => '',
 			],
 		];
 	}
