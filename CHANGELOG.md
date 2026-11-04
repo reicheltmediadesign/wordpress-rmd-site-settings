@@ -5,6 +5,10 @@ All notable changes to this plugin are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Menus tab: a badge next to each role shows how many users have it; hovering or focusing it lists their display and login names.
+
 ## [0.3.0] – 2026-11-04
 
 ### Added

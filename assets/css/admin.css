@@ -9,6 +9,12 @@
  *   .rmd-ss-delete-post-types  row with the post types of the delete tool
  *   .rmd-ss-count              number of comments next to an option
  *   .rmd-ss-hidden             row hidden by admin.js
+ *   .rmd-ss-role-users         badge with the number of users of a role (Menus tab)
+ *   .rmd-ss-role-users-empty   badge of a role without users
+ *   .rmd-ss-role-users-count   number inside the badge
+ *   .rmd-ss-role-users-list    user list shown on hover and focus
+ *   .rmd-ss-role-users-login   login name next to the display name
+ *   .rmd-ss-role-users-more    "and n more" entry of the list
  */
 
 .rmd-ss .rmd-ss-indent {
@@ -33,4 +39,77 @@
 	background: #d63638;
 	border-color: #d63638;
 	color: #fff;
+}
+
+.rmd-ss .rmd-ss-role-users {
+	display: inline-block;
+	position: relative;
+	vertical-align: baseline;
+}
+
+.rmd-ss .rmd-ss-role-users-count {
+	display: inline-block;
+	min-width: 18px;
+	padding: 0 6px;
+	border-radius: 9px;
+	background: #dcdcde;
+	color: #1d2327;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 18px;
+	text-align: center;
+	box-sizing: border-box;
+	cursor: default;
+}
+
+.rmd-ss .rmd-ss-role-users-empty .rmd-ss-role-users-count {
+	background: #f0f0f1;
+	color: #646970;
+}
+
+.rmd-ss .rmd-ss-role-users:focus {
+	outline: none;
+}
+
+.rmd-ss .rmd-ss-role-users:focus .rmd-ss-role-users-count {
+	box-shadow: 0 0 0 2px #2271b1;
+}
+
+.rmd-ss .rmd-ss-role-users-list {
+	visibility: hidden;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 100;
+	min-width: 200px;
+	max-width: 320px;
+	max-height: 300px;
+	overflow-y: auto;
+	margin-top: 4px;
+	padding: 8px 12px;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	background: #fff;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	font-weight: 400;
+	white-space: nowrap;
+}
+
+.rmd-ss .rmd-ss-role-users:hover .rmd-ss-role-users-list,
+.rmd-ss .rmd-ss-role-users:focus .rmd-ss-role-users-list,
+.rmd-ss .rmd-ss-role-users:focus-within .rmd-ss-role-users-list {
+	visibility: visible;
+}
+
+.rmd-ss .rmd-ss-role-users-list ul {
+	margin: 0;
+}
+
+.rmd-ss .rmd-ss-role-users-list li {
+	margin: 2px 0;
+}
+
+.rmd-ss .rmd-ss-role-users-login,
+.rmd-ss .rmd-ss-role-users-more {
+	color: #646970;
 }

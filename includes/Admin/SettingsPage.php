@@ -21,6 +21,8 @@ final class SettingsPage {
 
 	public const SLUG = 'rmd-site-settings';
 
+	private const ROLE_USERS_LIMIT = 25;
+
 	public static function init(): void {
 		add_action( 'admin_menu', [ self::class, 'menu' ] );
 		add_action( 'admin_enqueue_scripts', [ self::class, 'assets' ] );
@@ -275,19 +277,21 @@ final class SettingsPage {
 			MenuAccess::READ  => __( 'View only', 'rmd-site-settings' ),
 			MenuAccess::WRITE => __( 'Edit', 'rmd-site-settings' ),
 		];
+		$counts     = count_users()['avail_roles'];
 
 		foreach ( wp_roles()->get_names() as $role => $name ) {
-			$role = (string) $role;
-			$id   = 'rmd-ss-menus-' . sanitize_html_class( $role );
+			$role  = (string) $role;
+			$id    = 'rmd-ss-menus-' . sanitize_html_class( $role );
+			$users = self::role_users( $role, (int) ( $counts[ $role ] ?? 0 ) );
 
 			if ( ! isset( $assignable[ $role ] ) ) {
-				self::row_start( translate_user_role( $name ) );
+				self::row_start( translate_user_role( $name ), '', '', $users );
 				echo '<span class="rmd-ss-count">' . esc_html__( 'Full access (WordPress default)', 'rmd-site-settings' ) . '</span>';
 				self::row_end();
 				continue;
 			}
 
-			self::row_start( $assignable[ $role ], '', $id );
+			self::row_start( $assignable[ $role ], '', $id, $users );
 			printf( '<select id="%s" name="%s">', esc_attr( $id ), esc_attr( self::name( 'menus' ) . '[roles][' . $role . ']' ) );
 			foreach ( $levels as $value => $label ) {
 				printf(
@@ -300,6 +304,48 @@ final class SettingsPage {
 			echo '</select>';
 			self::row_end();
 		}
+	}
+
+	/**
+	 * Badge with the number of users of a role; lists them on hover and focus.
+	 *
+	 * @return string Escaped HTML.
+	 */
+	private static function role_users( string $role, int $count ): string {
+		/* translators: %s: number of users */
+		$label = esc_html( sprintf( _n( '%s user', '%s users', $count, 'rmd-site-settings' ), number_format_i18n( $count ) ) );
+		$badge = '<span class="rmd-ss-role-users-count" aria-hidden="true">' . esc_html( number_format_i18n( $count ) ) . '</span>'
+			. '<span class="screen-reader-text">' . $label . '</span>';
+
+		if ( 0 === $count ) {
+			return '<span class="rmd-ss-role-users rmd-ss-role-users-empty" title="' . esc_attr( $label ) . '">' . $badge . '</span>';
+		}
+
+		$users = get_users(
+			[
+				'role'    => $role,
+				'number'  => self::ROLE_USERS_LIMIT,
+				'orderby' => 'display_name',
+				'fields'  => [ 'user_login', 'display_name' ],
+			]
+		);
+
+		$items = '';
+		foreach ( $users as $user ) {
+			$items .= '<li>' . esc_html( $user->display_name );
+			if ( $user->display_name !== $user->user_login ) {
+				$items .= ' <span class="rmd-ss-role-users-login">' . esc_html( $user->user_login ) . '</span>';
+			}
+			$items .= '</li>';
+		}
+		$more = $count - count( $users );
+		if ( $more > 0 ) {
+			/* translators: %s: number of further users */
+			$items .= '<li class="rmd-ss-role-users-more">' . esc_html( sprintf( _n( 'and %s more', 'and %s more', $more, 'rmd-site-settings' ), number_format_i18n( $more ) ) ) . '</li>';
+		}
+
+		return '<span class="rmd-ss-role-users" tabindex="0">' . $badge
+			. '<span class="rmd-ss-role-users-list"><ul>' . $items . '</ul></span></span>';
 	}
 
 	private static function render_cleanup(): void {
@@ -401,12 +447,18 @@ final class SettingsPage {
 		self::row_end();
 	}
 
-	private static function row_start( string $label, string $row_class = '', string $label_for = '' ): void {
+	/**
+	 * @param string $after_label Escaped HTML placed after the label.
+	 */
+	private static function row_start( string $label, string $row_class = '', string $label_for = '', string $after_label = '' ): void {
 		printf( '<tr%s><th scope="row">', '' === $row_class ? '' : ' class="' . esc_attr( $row_class ) . '"' );
 		if ( '' === $label_for ) {
 			echo esc_html( $label );
 		} else {
 			printf( '<label for="%s">%s</label>', esc_attr( $label_for ), esc_html( $label ) );
+		}
+		if ( '' !== $after_label ) {
+			echo ' ' . $after_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the caller.
 		}
 		echo '</th><td>';
 	}
