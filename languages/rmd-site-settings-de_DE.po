@@ -263,3 +263,13 @@ msgstr "(ohne Beschriftung)"
 
 msgid "Invalid"
 msgstr "Ungültig"
+
+msgid "%s user"
+msgid_plural "%s users"
+msgstr[0] "%s Benutzer"
+msgstr[1] "%s Benutzer"
+
+msgid "and %s more"
+msgid_plural "and %s more"
+msgstr[0] "und %s weiterer"
+msgstr[1] "und %s weitere"

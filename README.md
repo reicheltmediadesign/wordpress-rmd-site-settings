@@ -70,7 +70,7 @@ The delete tool is at the bottom of the **Comments** tab. Choose what to delete,
 
 ### Menus
 
-One setting per role that cannot manage menus anyway (administrators always can). Users with several roles get the highest level of their roles.
+One setting per role that cannot manage menus anyway (administrators always can). Users with several roles get the highest level of their roles. The number next to each role shows how many users have it; hover over it to see their names.
 
 | Setting | Default | Description |
 | --- | --- | --- |
