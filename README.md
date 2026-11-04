@@ -12,6 +12,7 @@ Basic WordPress site settings in one place, for administrators: disable comments
 - **Page head** – remove the emoji script, generator tag, shortlink, oEmbed discovery links, REST API link and RSD link.
 - **Support widget** – a dashboard widget "Need help or support?" with the contact details of reichelt media.design. On by default; logo and contact details ship with the plugin, nothing is loaded from outside.
 - **Admin area** – hide the welcome panel and the "WordPress Events and News" and "Quick Draft" widgets, set an own admin footer text.
+- **Menus for other roles** – let roles such as editors edit or view the navigation menus. They get an own *Menus* item in the admin menu; editing uses the WordPress menu screen without opening widgets, the Customizer or theme settings.
 
 ## Usage
 
@@ -66,6 +67,18 @@ The delete tool is at the bottom of the **Comments** tab. Choose what to delete,
 | Events and news | shown | Hides the "WordPress Events and News" widget. |
 | Quick draft | shown | Hides the "Quick Draft" widget. |
 | Footer text | empty | Replaces "Thank you for creating with WordPress". Allowed HTML: `a`, `strong`, `em`. |
+
+### Menus
+
+One setting per role that cannot manage menus anyway (administrators always can). Users with several roles get the highest level of their roles.
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| No access | ✓ | WordPress default. |
+| View only | | A *Menus* item in the admin menu lists the menu locations and all menus with their items, without editing. |
+| Edit | | The *Menus* item opens the WordPress menu screen (*Appearance → Menus*): create, edit and delete menus and assign them to locations. Widgets, the Customizer and theme settings stay closed. |
+
+Only works with themes that register menu locations (classic themes). Block themes manage navigation in the Site Editor instead.
 
 ## Privacy
 

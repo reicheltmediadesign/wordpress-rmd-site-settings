@@ -21,6 +21,7 @@ RMD Site Settings collects basic switches that most business sites need, on one 
 * Remove the emoji script, generator tag, shortlink, oEmbed discovery links, REST API link and RSD link from the page head.
 * Dashboard widget "Need help or support?" with the contact details of reichelt media.design (on by default, no external requests).
 * Hide the welcome panel, the "WordPress Events and News" and "Quick Draft" widgets and set an own admin footer text.
+* Let other roles, for example editors, edit or view the navigation menus via an own "Menus" item in the admin menu.
 
 == Installation ==
 

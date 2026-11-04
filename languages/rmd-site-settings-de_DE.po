@@ -212,3 +212,54 @@ msgstr "Anrufen"
 
 msgid "Call %s"
 msgstr "%s anrufen"
+
+msgid "Menus"
+msgstr "Menüs"
+
+msgid "Choose which roles get access to the navigation menus. They find them under \"Menus\" in the admin menu. \"Edit\" opens the WordPress menu screen without access to widgets, the Customizer or theme settings; \"View only\" shows the menus without being able to change them."
+msgstr "Legen Sie fest, welche Rollen Zugriff auf die Navigationsmenüs erhalten. Sie finden sie im Adminmenü unter „Menüs“. „Bearbeiten“ öffnet die Menüverwaltung von WordPress ohne Zugriff auf Widgets, den Customizer oder Theme-Einstellungen; „Nur ansehen“ zeigt die Menüs an, ohne dass sie geändert werden können."
+
+msgid "The active theme has no menu locations (for example a block theme). The setting has no effect until a theme with menus is active."
+msgstr "Das aktive Theme hat keine Menüpositionen (zum Beispiel ein Block-Theme). Die Einstellung wirkt erst, wenn ein Theme mit Menüs aktiv ist."
+
+msgid "No access"
+msgstr "Kein Zugriff"
+
+msgid "View only"
+msgstr "Nur ansehen"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Full access (WordPress default)"
+msgstr "Voller Zugriff (WordPress-Standard)"
+
+msgid "You can view the menus of this site here. To change them, please contact the administrator."
+msgstr "Hier sehen Sie die Menüs dieser Website. Für Änderungen wenden Sie sich bitte an den Administrator."
+
+msgid "Menu locations"
+msgstr "Menüpositionen"
+
+msgid "Location"
+msgstr "Position"
+
+msgid "Menu"
+msgstr "Menü"
+
+msgid "No menu assigned"
+msgstr "Kein Menü zugewiesen"
+
+msgid "No menus have been created yet."
+msgstr "Es wurden noch keine Menüs angelegt."
+
+msgid "Shown in: %s"
+msgstr "Angezeigt in: %s"
+
+msgid "This menu has no items."
+msgstr "Dieses Menü hat keine Einträge."
+
+msgid "(no label)"
+msgstr "(ohne Beschriftung)"
+
+msgid "Invalid"
+msgstr "Ungültig"

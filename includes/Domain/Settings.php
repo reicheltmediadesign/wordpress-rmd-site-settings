@@ -24,7 +24,8 @@ final class Settings {
 	 *     comments: array{mode: string, post_types: list<string>, keep_existing: bool},
 	 *     xmlrpc: array{disable: bool},
 	 *     head: array{emoji: bool, generator: bool, shortlink: bool, oembed_links: bool, rest_link: bool, rsd: bool},
-	 *     admin: array{support_widget: bool, welcome_panel: bool, events_news: bool, quick_draft: bool, footer_text: string}
+	 *     admin: array{support_widget: bool, welcome_panel: bool, events_news: bool, quick_draft: bool, footer_text: string},
+	 *     menus: array{roles: array<string, string>}
 	 * }
 	 */
 	public static function defaults(): array {
@@ -52,6 +53,9 @@ final class Settings {
 				'quick_draft'    => false,
 				'footer_text'    => '',
 			],
+			'menus'    => [
+				'roles' => [],
+			],
 		];
 	}
 
@@ -62,9 +66,10 @@ final class Settings {
 	 * @param mixed             $raw              Raw value.
 	 * @param list<string>|null $known_post_types Post types that may be selected; null skips that check
 	 *                                            (post types are not registered yet when the option is read early).
+	 * @param list<string>|null $known_roles      Roles whose menu access may be configured; null skips that check.
 	 * @return array<string, array<string, mixed>>
 	 */
-	public static function parse( $raw, ?array $known_post_types = null ): array {
+	public static function parse( $raw, ?array $known_post_types = null, ?array $known_roles = null ): array {
 		$defaults = self::defaults();
 		$raw      = is_array( $raw ) ? $raw : [];
 		$result   = [];
@@ -73,7 +78,9 @@ final class Settings {
 			$input = isset( $raw[ $section ] ) && is_array( $raw[ $section ] ) ? $raw[ $section ] : [];
 			foreach ( $section_defaults as $key => $default ) {
 				$value = $input[ $key ] ?? null;
-				if ( is_bool( $default ) ) {
+				if ( 'menus' === $section && 'roles' === $key ) {
+					$result[ $section ][ $key ] = MenuAccess::parse_roles( $value, $known_roles );
+				} elseif ( is_bool( $default ) ) {
 					$result[ $section ][ $key ] = null === $value ? $default : self::bool( $value, $default );
 				} elseif ( is_array( $default ) ) {
 					$result[ $section ][ $key ] = self::slugs( $value );
