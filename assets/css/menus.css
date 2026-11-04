@@ -1,0 +1,56 @@
+/*
+ * RMD Site Settings – read-only menu page (Menus, for roles with "View only").
+ * Classes:
+ *   .rmd-ss-menus            page wrapper (.wrap)
+ *   .rmd-ss-menus-locations  table of the menu locations
+ *   .rmd-ss-menus-menu       one menu
+ *   .rmd-ss-menus-items      list of menu items (nested per level)
+ *   .rmd-ss-menus-item       one menu item
+ *   .rmd-ss-menus-invalid    menu item whose target no longer exists
+ *   .rmd-ss-menus-title      label of a menu item
+ *   .rmd-ss-menus-type       type of a menu item (page, custom link, …)
+ *   .rmd-ss-menus-url        link target of a menu item
+ *   .rmd-ss-menus-muted      secondary text
+ */
+
+.rmd-ss-menus .rmd-ss-menus-locations {
+	max-width: 640px;
+}
+
+.rmd-ss-menus .rmd-ss-menus-menu {
+	margin-top: 24px;
+	max-width: 640px;
+}
+
+.rmd-ss-menus .rmd-ss-menus-items {
+	margin: 0;
+}
+
+.rmd-ss-menus .rmd-ss-menus-items .rmd-ss-menus-items {
+	margin: 6px 0 0 24px;
+}
+
+.rmd-ss-menus .rmd-ss-menus-item {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	padding: 8px 12px;
+}
+
+.rmd-ss-menus .rmd-ss-menus-invalid {
+	border-color: #d63638;
+}
+
+.rmd-ss-menus .rmd-ss-menus-title {
+	font-weight: 600;
+}
+
+.rmd-ss-menus .rmd-ss-menus-type,
+.rmd-ss-menus .rmd-ss-menus-muted {
+	color: #646970;
+}
+
+.rmd-ss-menus .rmd-ss-menus-url {
+	display: block;
+	margin-top: 2px;
+	overflow-wrap: anywhere;
+}

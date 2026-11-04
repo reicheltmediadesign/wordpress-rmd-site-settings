@@ -33,6 +33,7 @@ final class Plugin {
 		Modules\HeadCleanup::init();
 		Modules\AdminArea::init();
 		Modules\SupportWidget::init();
+		Modules\MenuManager::init();
 
 		if ( is_admin() ) {
 			Modules\CommentCleanup::init();

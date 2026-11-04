@@ -7,9 +7,11 @@
 
 namespace RMD\SiteSettings\Admin;
 
+use RMD\SiteSettings\Domain\MenuAccess;
 use RMD\SiteSettings\Domain\Settings as SettingsData;
 use RMD\SiteSettings\Modules\CommentCleanup;
 use RMD\SiteSettings\Modules\Comments;
+use RMD\SiteSettings\Modules\MenuManager;
 use RMD\SiteSettings\Plugin;
 use RMD\SiteSettings\Settings;
 
@@ -80,6 +82,7 @@ final class SettingsPage {
 			'xmlrpc'   => __( 'XML-RPC', 'rmd-site-settings' ),
 			'head'     => __( 'Page head', 'rmd-site-settings' ),
 			'admin'    => __( 'Admin area', 'rmd-site-settings' ),
+			'menus'    => __( 'Menus', 'rmd-site-settings' ),
 		];
 	}
 
@@ -112,11 +115,15 @@ final class SettingsPage {
 
 		echo '<form method="post" action="options.php">';
 		settings_fields( Settings::GROUP );
+		if ( 'menus' === $tab ) {
+			self::render_menus_intro();
+		}
 		echo '<table class="form-table" role="presentation"><tbody>';
 		match ( $tab ) {
 			'xmlrpc' => self::render_xmlrpc(),
 			'head'   => self::render_head(),
 			'admin'  => self::render_admin(),
+			'menus'  => self::render_menus(),
 			default  => self::render_comments(),
 		};
 		echo '</tbody></table>';
@@ -251,6 +258,48 @@ final class SettingsPage {
 		);
 		echo '<p class="description">' . esc_html__( 'Replaces "Thank you for creating with WordPress" at the bottom of every admin page. Allowed HTML: a, strong, em. Leave empty for the default text.', 'rmd-site-settings' ) . '</p>';
 		self::row_end();
+	}
+
+	private static function render_menus_intro(): void {
+		echo '<p>' . esc_html__( 'Choose which roles get access to the navigation menus. They find them under "Menus" in the admin menu. "Edit" opens the WordPress menu screen without access to widgets, the Customizer or theme settings; "View only" shows the menus without being able to change them.', 'rmd-site-settings' ) . '</p>';
+		if ( ! current_theme_supports( 'menus' ) ) {
+			echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'The active theme has no menu locations (for example a block theme). The setting has no effect until a theme with menus is active.', 'rmd-site-settings' ) . '</p></div>';
+		}
+	}
+
+	private static function render_menus(): void {
+		$configured = Settings::section( 'menus' )['roles'];
+		$assignable = MenuManager::assignable_roles();
+		$levels     = [
+			MenuAccess::NONE  => __( 'No access', 'rmd-site-settings' ),
+			MenuAccess::READ  => __( 'View only', 'rmd-site-settings' ),
+			MenuAccess::WRITE => __( 'Edit', 'rmd-site-settings' ),
+		];
+
+		foreach ( wp_roles()->get_names() as $role => $name ) {
+			$role = (string) $role;
+			$id   = 'rmd-ss-menus-' . sanitize_html_class( $role );
+
+			if ( ! isset( $assignable[ $role ] ) ) {
+				self::row_start( translate_user_role( $name ) );
+				echo '<span class="rmd-ss-count">' . esc_html__( 'Full access (WordPress default)', 'rmd-site-settings' ) . '</span>';
+				self::row_end();
+				continue;
+			}
+
+			self::row_start( $assignable[ $role ], '', $id );
+			printf( '<select id="%s" name="%s">', esc_attr( $id ), esc_attr( self::name( 'menus' ) . '[roles][' . $role . ']' ) );
+			foreach ( $levels as $value => $label ) {
+				printf(
+					'<option value="%s" %s>%s</option>',
+					esc_attr( $value ),
+					selected( $configured[ $role ] ?? MenuAccess::NONE, $value, false ),
+					esc_html( $label )
+				);
+			}
+			echo '</select>';
+			self::row_end();
+		}
 	}
 
 	private static function render_cleanup(): void {
