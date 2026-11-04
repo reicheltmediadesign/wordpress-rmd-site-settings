@@ -5,6 +5,8 @@ All notable changes to this plugin are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.0] – 2026-11-04
+
 ### Added
 
 - Menus: give roles without the `edit_theme_options` capability (e.g. editors) access to the navigation menus – *Edit* or *View only*, per role. They get an own "Menus" item in the admin menu. *Edit* opens the WordPress menu screen; the capability is granted only for that screen and its AJAX actions, so widgets, the Customizer and theme settings stay closed. *View only* lists menu locations and menus with their items.
