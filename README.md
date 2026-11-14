@@ -13,6 +13,7 @@ Basic WordPress site settings in one place, for administrators: disable comments
 - **Support widget** – a dashboard widget "Need help or support?" with the contact details of reichelt media.design. On by default; logo and contact details ship with the plugin, nothing is loaded from outside.
 - **Admin area** – hide the welcome panel and the "WordPress Events and News" and "Quick Draft" widgets, set an own admin footer text.
 - **Menus for other roles** – let roles such as editors edit or view the navigation menus. They get an own *Menus* item in the admin menu; editing uses the WordPress menu screen without opening widgets, the Customizer or theme settings.
+- **Admin access for other roles** – give roles access to post types and to admin pages of plugins and the theme they cannot open otherwise, for example a theme options page for editors.
 
 ## Usage
 
@@ -80,9 +81,20 @@ One setting per role that cannot manage menus anyway (administrators always can)
 
 Only works with themes that register menu locations (classic themes). Block themes manage navigation in the Site Editor instead.
 
+### Admin access
+
+One row per role (administrators always have full access) with two lists. Items a role can open anyway are shown ticked and greyed out. Users with several roles get everything their roles get.
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| Post types | none | Post types of plugins and the theme that have an own admin menu item. The role gets all capabilities of the post type: list, create, edit, publish and delete, also in the block editor. Post types marked *uses the permissions of posts* (or *pages*) share their capabilities with posts or pages, so the role gets access to those as well. |
+| Admin pages | none | Top-level admin menu items of plugins and the theme (`admin.php?page=…`), including their subpages. The role sees the item in the admin menu and can open and save the page; the capabilities the page needs are granted only on that page and when its settings are saved, not elsewhere in the admin area. |
+
+Admin pages are listed as the admin menu looked for an administrator on their last visit to the admin area. Pages that need capabilities for users, roles, plugins, themes, updates or the network cannot be shared (*not possible: needs protected permissions*), and the WordPress settings screens and this plugin's settings cannot be saved this way. Actions of a shared page that run via AJAX or `admin-post.php` may still need the capability itself.
+
 ## Privacy
 
-The plugin stores its settings in the option `rmd_ss_settings` and sends no data anywhere. The support widget shows contact details and a logo that ship with the plugin; nothing is loaded from other servers. The only outgoing request is the update check, which reads `update.json` from the GitHub releases of this repository.
+The plugin stores its settings in the option `rmd_ss_settings` and the admin pages offered on the *Admin access* tab in `rmd_ss_admin_menu`; it sends no data anywhere. The support widget shows contact details and a logo that ship with the plugin; nothing is loaded from other servers. The only outgoing request is the update check, which reads `update.json` from the GitHub releases of this repository.
 
 ## Installation
 

@@ -273,3 +273,30 @@ msgid "and %s more"
 msgid_plural "and %s more"
 msgstr[0] "und %s weiterer"
 msgstr[1] "und %s weitere"
+
+msgid "Admin access"
+msgstr "Adminzugriff"
+
+msgid "Give roles access to post types and to admin pages of plugins and the theme that they cannot open otherwise. A post type comes with all its permissions (create, edit, publish, delete). An admin page opens with the permissions it needs only on its own screens and when its settings are saved; the rest of the admin area stays as it is."
+msgstr "Geben Sie Rollen Zugriff auf Inhaltstypen und Adminseiten von Plugins und Theme, die sie sonst nicht öffnen können. Ein Inhaltstyp wird mit allen Berechtigungen freigegeben (erstellen, bearbeiten, veröffentlichen, löschen). Eine Adminseite erhält die nötigen Berechtigungen nur auf ihren eigenen Bildschirmen und beim Speichern ihrer Einstellungen; der übrige Adminbereich bleibt unverändert."
+
+msgid "Pages that need permissions for users, roles, plugins, themes or updates cannot be shared, and neither can the WordPress settings screens."
+msgstr "Seiten, die Berechtigungen für Benutzer, Rollen, Plugins, Themes oder Aktualisierungen benötigen, können nicht freigegeben werden, ebenso wenig die Einstellungsseiten von WordPress."
+
+msgid "There are no post types or admin pages of plugins or the theme."
+msgstr "Es gibt keine Inhaltstypen oder Adminseiten von Plugins oder dem Theme."
+
+msgid "Admin pages"
+msgstr "Adminseiten"
+
+msgid "uses the permissions of posts"
+msgstr "nutzt die Berechtigungen von Beiträgen"
+
+msgid "uses the permissions of pages"
+msgstr "nutzt die Berechtigungen von Seiten"
+
+msgid "has access anyway"
+msgstr "hat bereits Zugriff"
+
+msgid "not possible: needs protected permissions"
+msgstr "nicht möglich: benötigt geschützte Berechtigungen"

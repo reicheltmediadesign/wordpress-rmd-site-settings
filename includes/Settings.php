@@ -59,7 +59,12 @@ final class Settings {
 		$value  = is_array( $value ) ? $value : [];
 		$merged = array_replace( self::get(), array_intersect_key( $value, SettingsData::defaults() ) );
 
-		$data = SettingsData::parse( $merged, Modules\Comments::commentable_post_types(), array_keys( Modules\MenuManager::assignable_roles() ) );
+		$data = SettingsData::parse(
+			$merged,
+			Modules\Comments::commentable_post_types(),
+			array_keys( Modules\MenuManager::assignable_roles() ),
+			array_map( 'strval', array_keys( wp_roles()->get_names() ) )
+		);
 
 		$data['admin']['footer_text'] = wp_kses( $data['admin']['footer_text'], self::FOOTER_HTML );
 

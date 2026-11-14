@@ -15,6 +15,8 @@
  *   .rmd-ss-role-users-list    user list shown on hover and focus
  *   .rmd-ss-role-users-login   login name next to the display name
  *   .rmd-ss-role-users-more    "and n more" entry of the list
+ *   .rmd-ss-access-group       fieldset of post types or admin pages (Admin access tab)
+ *   .rmd-ss-access-note        hint after a post type or admin page
  */
 
 .rmd-ss .rmd-ss-indent {
@@ -111,5 +113,18 @@
 
 .rmd-ss .rmd-ss-role-users-login,
 .rmd-ss .rmd-ss-role-users-more {
+	color: #646970;
+}
+
+.rmd-ss .rmd-ss-access-group {
+	margin: 0 0 12px;
+}
+
+.rmd-ss .rmd-ss-access-group legend {
+	margin-bottom: 4px;
+	font-weight: 600;
+}
+
+.rmd-ss .rmd-ss-access-note {
 	color: #646970;
 }
