@@ -7,8 +7,10 @@
 
 namespace RMD\SiteSettings\Admin;
 
+use RMD\SiteSettings\Domain\AdminAccess;
 use RMD\SiteSettings\Domain\MenuAccess;
 use RMD\SiteSettings\Domain\Settings as SettingsData;
+use RMD\SiteSettings\Modules\AccessManager;
 use RMD\SiteSettings\Modules\CommentCleanup;
 use RMD\SiteSettings\Modules\Comments;
 use RMD\SiteSettings\Modules\MenuManager;
@@ -85,6 +87,7 @@ final class SettingsPage {
 			'head'     => __( 'Page head', 'rmd-site-settings' ),
 			'admin'    => __( 'Admin area', 'rmd-site-settings' ),
 			'menus'    => __( 'Menus', 'rmd-site-settings' ),
+			'access'   => __( 'Admin access', 'rmd-site-settings' ),
 		];
 	}
 
@@ -119,6 +122,8 @@ final class SettingsPage {
 		settings_fields( Settings::GROUP );
 		if ( 'menus' === $tab ) {
 			self::render_menus_intro();
+		} elseif ( 'access' === $tab ) {
+			self::render_access_intro();
 		}
 		echo '<table class="form-table" role="presentation"><tbody>';
 		match ( $tab ) {
@@ -126,6 +131,7 @@ final class SettingsPage {
 			'head'   => self::render_head(),
 			'admin'  => self::render_admin(),
 			'menus'  => self::render_menus(),
+			'access' => self::render_access(),
 			default  => self::render_comments(),
 		};
 		echo '</tbody></table>';
@@ -304,6 +310,106 @@ final class SettingsPage {
 			echo '</select>';
 			self::row_end();
 		}
+	}
+
+	private static function render_access_intro(): void {
+		echo '<p>' . esc_html__( 'Give roles access to post types and to admin pages of plugins and the theme that they cannot open otherwise. A post type comes with all its permissions (create, edit, publish, delete). An admin page opens with the permissions it needs only on its own screens and when its settings are saved; the rest of the admin area stays as it is.', 'rmd-site-settings' ) . '</p>';
+		echo '<p>' . esc_html__( 'Pages that need permissions for users, roles, plugins, themes or updates cannot be shared, and neither can the WordPress settings screens.', 'rmd-site-settings' ) . '</p>';
+	}
+
+	private static function render_access(): void {
+		$settings = Settings::section( 'access' );
+		$types    = AccessManager::post_types();
+		$pages    = AccessManager::menu();
+		$counts   = count_users()['avail_roles'];
+		$name     = self::name( 'access' );
+
+		if ( [] === $types && [] === $pages ) {
+			self::row_start( __( 'Admin access', 'rmd-site-settings' ) );
+			echo esc_html__( 'There are no post types or admin pages of plugins or the theme.', 'rmd-site-settings' );
+			self::row_end();
+			return;
+		}
+
+		foreach ( wp_roles()->get_names() as $role => $role_name ) {
+			$role   = (string) $role;
+			$object = get_role( $role );
+			if ( ! $object ) {
+				continue;
+			}
+			self::row_start( translate_user_role( $role_name ), '', '', self::role_users( $role, (int) ( $counts[ $role ] ?? 0 ) ) );
+
+			if ( $object->has_cap( Plugin::CAP ) ) {
+				echo '<span class="rmd-ss-count">' . esc_html__( 'Full access (WordPress default)', 'rmd-site-settings' ) . '</span>';
+				self::row_end();
+				continue;
+			}
+
+			if ( [] !== $types ) {
+				$field = $name . '[post_types][' . $role . '][]';
+				echo '<fieldset class="rmd-ss-access-group"><legend>' . esc_html__( 'Post types', 'rmd-site-settings' ) . '</legend>';
+				printf( '<input type="hidden" name="%s" value="">', esc_attr( $field ) );
+				foreach ( $types as $type_name => $type ) {
+					$shared = match ( (string) $type->cap->edit_posts ) {
+						'edit_posts' => __( 'uses the permissions of posts', 'rmd-site-settings' ),
+						'edit_pages' => __( 'uses the permissions of pages', 'rmd-site-settings' ),
+						default      => '',
+					};
+					self::access_checkbox(
+						$field,
+						(string) $type_name,
+						sprintf( '%s (%s)', $type->labels->name, $type_name ),
+						in_array( $type_name, $settings['post_types'][ $role ] ?? [], true ),
+						$object->has_cap( (string) $type->cap->edit_posts ),
+						false,
+						$shared
+					);
+				}
+				echo '</fieldset>';
+			}
+
+			if ( [] !== $pages ) {
+				$field = $name . '[pages][' . $role . '][]';
+				echo '<fieldset class="rmd-ss-access-group"><legend>' . esc_html__( 'Admin pages', 'rmd-site-settings' ) . '</legend>';
+				printf( '<input type="hidden" name="%s" value="">', esc_attr( $field ) );
+				foreach ( $pages as $slug => $page ) {
+					self::access_checkbox(
+						$field,
+						$slug,
+						$page['title'],
+						in_array( $slug, $settings['pages'][ $role ] ?? [], true ),
+						$object->has_cap( $page['caps'][0] ),
+						! AdminAccess::is_grantable( $page['caps'] ),
+						implode( ', ', $page['submenus'] )
+					);
+				}
+				echo '</fieldset>';
+			}
+
+			self::row_end();
+		}
+	}
+
+	/**
+	 * @param bool   $native    The role has access anyway: shown checked and disabled.
+	 * @param bool   $locked    The item needs protected permissions: shown disabled.
+	 * @param string $note      Plain text shown after the label.
+	 */
+	private static function access_checkbox( string $field, string $value, string $label, bool $checked, bool $native, bool $locked, string $note ): void {
+		if ( $native ) {
+			$note = __( 'has access anyway', 'rmd-site-settings' );
+		} elseif ( $locked ) {
+			$note = __( 'not possible: needs protected permissions', 'rmd-site-settings' );
+		}
+		printf(
+			'<label><input type="checkbox" name="%s" value="%s" %s %s> %s</label>%s<br>',
+			esc_attr( $field ),
+			esc_attr( $value ),
+			checked( $native || ( $checked && ! $locked ), true, false ),
+			disabled( $native || $locked, true, false ),
+			esc_html( $label ),
+			'' === $note ? '' : ' <span class="rmd-ss-access-note">– ' . esc_html( $note ) . '</span>'
+		);
 	}
 
 	/**

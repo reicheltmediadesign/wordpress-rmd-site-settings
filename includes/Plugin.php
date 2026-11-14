@@ -34,6 +34,7 @@ final class Plugin {
 		Modules\AdminArea::init();
 		Modules\SupportWidget::init();
 		Modules\MenuManager::init();
+		Modules\AccessManager::init();
 
 		if ( is_admin() ) {
 			Modules\CommentCleanup::init();

@@ -5,6 +5,10 @@ All notable changes to this plugin are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Admin access tab: give roles access to post types and to admin pages of plugins and the theme (e.g. editors to a theme options page that needs `manage_options`). A post type comes with all its capabilities. An admin page gets the capabilities it needs only while the admin menu is built, on its own screens and when its Settings API form is saved via `options.php`; menu items that would become visible otherwise are removed. Capabilities for users, roles, plugins, themes, updates and the network are never granted, and the WordPress settings groups and this plugin's settings cannot be saved that way.
+
 ## [0.4.0] – 2026-11-04
 
 ### Added

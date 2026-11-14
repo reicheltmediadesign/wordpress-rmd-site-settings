@@ -22,6 +22,7 @@ RMD Site Settings collects basic switches that most business sites need, on one 
 * Dashboard widget "Need help or support?" with the contact details of reichelt media.design (on by default, no external requests).
 * Hide the welcome panel, the "WordPress Events and News" and "Quick Draft" widgets and set an own admin footer text.
 * Let other roles, for example editors, edit or view the navigation menus via an own "Menus" item in the admin menu.
+* Give roles access to post types and to admin pages of plugins and the theme they cannot open otherwise.
 
 == Installation ==
 
