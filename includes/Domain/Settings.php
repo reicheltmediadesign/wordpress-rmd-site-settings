@@ -26,20 +26,21 @@ final class Settings {
 	 *     head: array{emoji: bool, generator: bool, shortlink: bool, oembed_links: bool, rest_link: bool, rsd: bool},
 	 *     admin: array{support_widget: bool, welcome_panel: bool, events_news: bool, quick_draft: bool, footer_text: string},
 	 *     menus: array{roles: array<string, string>},
-	 *     access: array{post_types: array<string, list<string>>, pages: array<string, list<string>>}
+	 *     access: array{post_types: array<string, list<string>>, pages: array<string, list<string>>},
+	 *     app_passwords: array{disabled_roles: list<string>}
 	 * }
 	 */
 	public static function defaults(): array {
 		return [
-			'comments' => [
+			'comments'      => [
 				'mode'          => self::MODE_OFF,
 				'post_types'    => [],
 				'keep_existing' => false,
 			],
-			'xmlrpc'   => [
+			'xmlrpc'        => [
 				'disable' => false,
 			],
-			'head'     => [
+			'head'          => [
 				'emoji'        => false,
 				'generator'    => false,
 				'shortlink'    => false,
@@ -47,19 +48,22 @@ final class Settings {
 				'rest_link'    => false,
 				'rsd'          => false,
 			],
-			'admin'    => [
+			'admin'         => [
 				'support_widget' => true,
 				'welcome_panel'  => false,
 				'events_news'    => false,
 				'quick_draft'    => false,
 				'footer_text'    => '',
 			],
-			'menus'    => [
+			'menus'         => [
 				'roles' => [],
 			],
-			'access'   => [
+			'access'        => [
 				'post_types' => [],
 				'pages'      => [],
+			],
+			'app_passwords' => [
+				'disabled_roles' => [],
 			],
 		];
 	}
@@ -72,7 +76,7 @@ final class Settings {
 	 * @param list<string>|null $known_post_types Post types that may be selected; null skips that check
 	 *                                            (post types are not registered yet when the option is read early).
 	 * @param list<string>|null $known_roles      Roles whose menu access may be configured; null skips that check.
-	 * @param list<string>|null $all_roles        Roles whose admin access may be configured; null skips that check.
+	 * @param list<string>|null $all_roles        Roles whose admin access and application passwords may be configured; null skips that check.
 	 * @return array<string, array<string, mixed>>
 	 */
 	public static function parse( $raw, ?array $known_post_types = null, ?array $known_roles = null, ?array $all_roles = null ): array {
@@ -88,6 +92,8 @@ final class Settings {
 					$result[ $section ][ $key ] = MenuAccess::parse_roles( $value, $known_roles );
 				} elseif ( 'access' === $section ) {
 					$result[ $section ][ $key ] = AdminAccess::parse_grants( $value, $key, $all_roles );
+				} elseif ( 'app_passwords' === $section && 'disabled_roles' === $key ) {
+					$result[ $section ][ $key ] = AppPasswords::parse_roles( $value, $all_roles );
 				} elseif ( is_bool( $default ) ) {
 					$result[ $section ][ $key ] = null === $value ? $default : self::bool( $value, $default );
 				} elseif ( is_array( $default ) ) {

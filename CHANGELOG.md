@@ -5,6 +5,12 @@ All notable changes to this plugin are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Security tab with the sections "Application passwords" and "Updates".
+- Updates: overview of all installed plugins and themes with version, pending update, automatic updates and the date of the latest release in the WordPress.org directory (fetched on demand, stored in `rmd_ss_release_dates`). Releases older than two years and plugins closed in the directory are marked.
+- Application passwords: switch off application passwords per role (`wp_is_application_passwords_available_for_user`). Existing passwords of a switched-off role stop working without being deleted; users with several roles keep them as long as one role may use them. A table lists all existing application passwords with user, role, name, creation date, last use and status; selected ones or all of them can be deleted there.
+
 ## [0.5.0] – 2026-11-14
 
 ### Added

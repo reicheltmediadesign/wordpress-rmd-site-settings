@@ -35,9 +35,11 @@ final class Plugin {
 		Modules\SupportWidget::init();
 		Modules\MenuManager::init();
 		Modules\AccessManager::init();
+		Modules\AppPasswords::init();
 
 		if ( is_admin() ) {
 			Modules\CommentCleanup::init();
+			Modules\Updates::init();
 			Admin\SettingsPage::init();
 		}
 	}
