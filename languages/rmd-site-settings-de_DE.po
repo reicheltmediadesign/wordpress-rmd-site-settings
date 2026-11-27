@@ -388,6 +388,12 @@ msgstr "Nicht alle Anwendungspasswörter konnten gelöscht werden. Prüfen Sie d
 msgid "Security"
 msgstr "Sicherheit"
 
+msgid "XML-RPC is already switched off by a must-use plugin or another plugin. This setting makes no difference as long as that is the case."
+msgstr "XML-RPC ist bereits durch ein Must-Use-Plugin oder ein anderes Plugin abgeschaltet. Solange das so ist, macht diese Einstellung keinen Unterschied."
+
+msgid "switched off for the whole site"
+msgstr "für die gesamte Website abgeschaltet"
+
 msgid "Updates"
 msgstr "Aktualisierungen"
 

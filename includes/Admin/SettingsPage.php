@@ -17,6 +17,7 @@ use RMD\SiteSettings\Modules\CommentCleanup;
 use RMD\SiteSettings\Modules\Comments;
 use RMD\SiteSettings\Modules\MenuManager;
 use RMD\SiteSettings\Modules\Updates;
+use RMD\SiteSettings\Modules\Xmlrpc;
 use RMD\SiteSettings\Plugin;
 use RMD\SiteSettings\Settings;
 
@@ -251,7 +252,8 @@ final class SettingsPage {
 			'disable',
 			__( 'XML-RPC', 'rmd-site-settings' ),
 			__( 'Disable XML-RPC', 'rmd-site-settings' ),
-			__( 'xmlrpc.php answers no requests, pingbacks are off and the RSD link is removed. Leave this off if you use the Jetpack plugin or an app that publishes via XML-RPC.', 'rmd-site-settings' )
+			__( 'xmlrpc.php answers no requests, pingbacks are off and the RSD link is removed. Leave this off if you use the Jetpack plugin or an app that publishes via XML-RPC.', 'rmd-site-settings' ),
+			Xmlrpc::enforced_elsewhere() ? __( 'XML-RPC is already switched off by a must-use plugin or another plugin. This setting makes no difference as long as that is the case.', 'rmd-site-settings' ) : ''
 		);
 	}
 
@@ -428,6 +430,8 @@ final class SettingsPage {
 		$counts   = count_users()['avail_roles'];
 		$field    = self::name( 'app_passwords' ) . '[disabled_roles][]';
 		$first    = true;
+		// Switched off for the whole site: the roles make no difference, so show that instead of the setting.
+		$enforced = ! wp_is_application_passwords_available();
 
 		foreach ( wp_roles()->get_names() as $role => $name ) {
 			$role = (string) $role;
@@ -438,15 +442,29 @@ final class SettingsPage {
 				printf( '<input type="hidden" name="%s" value="">', esc_attr( $field ) );
 				$first = false;
 			}
-			printf(
-				'<label for="%s"><input type="checkbox" id="%s" name="%s" value="%s" %s> %s</label>',
-				esc_attr( $id ),
-				esc_attr( $id ),
-				esc_attr( $field ),
-				esc_attr( $role ),
-				checked( in_array( $role, $disabled, true ), true, false ),
-				esc_html__( 'Disable application passwords', 'rmd-site-settings' )
-			);
+			if ( $enforced ) {
+				// A disabled checkbox is not submitted: keep the stored setting.
+				if ( in_array( $role, $disabled, true ) ) {
+					printf( '<input type="hidden" name="%s" value="%s">', esc_attr( $field ), esc_attr( $role ) );
+				}
+				printf(
+					'<label for="%s"><input type="checkbox" id="%s" checked disabled> %s</label> <span class="rmd-ss-access-note">– %s</span>',
+					esc_attr( $id ),
+					esc_attr( $id ),
+					esc_html__( 'Disable application passwords', 'rmd-site-settings' ),
+					esc_html__( 'switched off for the whole site', 'rmd-site-settings' )
+				);
+			} else {
+				printf(
+					'<label for="%s"><input type="checkbox" id="%s" name="%s" value="%s" %s> %s</label>',
+					esc_attr( $id ),
+					esc_attr( $id ),
+					esc_attr( $field ),
+					esc_attr( $role ),
+					checked( in_array( $role, $disabled, true ), true, false ),
+					esc_html__( 'Disable application passwords', 'rmd-site-settings' )
+				);
+			}
 			self::row_end();
 		}
 	}
@@ -758,20 +776,38 @@ final class SettingsPage {
 		return Settings::OPTION . '[' . $section . ']';
 	}
 
-	private static function checkbox_row( string $section, string $key, string $label, string $checkbox_label, string $description = '' ): void {
-		$id   = 'rmd-ss-' . $section . '-' . str_replace( '_', '-', $key );
-		$name = self::name( $section ) . '[' . $key . ']';
+	/**
+	 * @param string $enforced Not empty when something outside this plugin already does what the
+	 *                         switch does: shown ticked and greyed out with this text, the stored
+	 *                         setting is kept.
+	 */
+	private static function checkbox_row( string $section, string $key, string $label, string $checkbox_label, string $description = '', string $enforced = '' ): void {
+		$id    = 'rmd-ss-' . $section . '-' . str_replace( '_', '-', $key );
+		$name  = self::name( $section ) . '[' . $key . ']';
+		$value = (bool) Settings::section( $section )[ $key ];
 
 		self::row_start( $label );
-		printf( '<input type="hidden" name="%s" value="0">', esc_attr( $name ) );
-		printf(
-			'<label for="%s"><input type="checkbox" id="%s" name="%s" value="1" %s> %s</label>',
-			esc_attr( $id ),
-			esc_attr( $id ),
-			esc_attr( $name ),
-			checked( (bool) Settings::section( $section )[ $key ], true, false ),
-			esc_html( $checkbox_label )
-		);
+		if ( '' !== $enforced ) {
+			// A disabled checkbox is not submitted: keep the stored setting.
+			printf( '<input type="hidden" name="%s" value="%s">', esc_attr( $name ), $value ? '1' : '0' );
+			printf(
+				'<label for="%s"><input type="checkbox" id="%s" checked disabled> %s</label>',
+				esc_attr( $id ),
+				esc_attr( $id ),
+				esc_html( $checkbox_label )
+			);
+			echo '<p class="description"><strong>' . esc_html( $enforced ) . '</strong></p>';
+		} else {
+			printf( '<input type="hidden" name="%s" value="0">', esc_attr( $name ) );
+			printf(
+				'<label for="%s"><input type="checkbox" id="%s" name="%s" value="1" %s> %s</label>',
+				esc_attr( $id ),
+				esc_attr( $id ),
+				esc_attr( $name ),
+				checked( $value, true, false ),
+				esc_html( $checkbox_label )
+			);
+		}
 		if ( '' !== $description ) {
 			echo '<p class="description">' . esc_html( $description ) . '</p>';
 		}

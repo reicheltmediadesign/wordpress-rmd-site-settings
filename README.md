@@ -50,6 +50,8 @@ The delete tool is at the bottom of the **Comments** tab. Choose what to delete,
 | --- | --- | --- |
 | Disable XML-RPC | off | No XML-RPC methods, pingbacks off, no `X-Pingback` header and RSD link. Leave off for Jetpack or apps that publish via XML-RPC. |
 
+If a must-use plugin or another plugin already switches XML-RPC off, the checkbox is shown ticked and greyed out with a note; the stored setting is kept.
+
 ### Page head
 
 | Setting | Default | Description |
@@ -107,6 +109,8 @@ One checkbox per role, administrators included. Users with several roles keep th
 | Disable application passwords | off | Users of the role cannot sign in to the REST API or XML-RPC with an application password and no longer see the section in their profile. Existing application passwords stop working but are not deleted; they work again when the role is enabled. |
 
 Below the settings, *Existing application passwords* lists every application password on the site: user, role, name, creation date, last use and whether it is active or disabled (by the role setting or because application passwords are switched off for the whole site). Tick the ones to remove and click *Delete selected*, or click *Delete all*. Deleted application passwords cannot be restored; disabling alone keeps them in the database.
+
+If application passwords are switched off for the whole site (no HTTPS, a must-use plugin or another plugin), a notice says so and the role checkboxes are shown ticked and greyed out; the stored role setting is kept.
 
 **Updates**
 
