@@ -12,7 +12,7 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
  * Deletes the options of the current site.
  */
 function rmd_ss_uninstall_site(): void {
-	foreach ( [ 'rmd_ss_settings', 'rmd_ss_admin_menu', 'rmd_ss_version', 'external_updates-rmd-site-settings' ] as $rmd_ss_option ) {
+	foreach ( [ 'rmd_ss_settings', 'rmd_ss_admin_menu', 'rmd_ss_release_dates', 'rmd_ss_version', 'external_updates-rmd-site-settings' ] as $rmd_ss_option ) {
 		delete_option( $rmd_ss_option );
 	}
 }

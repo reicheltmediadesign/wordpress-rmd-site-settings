@@ -14,7 +14,8 @@ Basic WordPress site settings in one place, for administrators: disable comments
 - **Admin area** – hide the welcome panel and the "WordPress Events and News" and "Quick Draft" widgets, set an own admin footer text.
 - **Menus for other roles** – let roles such as editors edit or view the navigation menus. They get an own *Menus* item in the admin menu; editing uses the WordPress menu screen without opening widgets, the Customizer or theme settings.
 - **Admin access for other roles** – give roles access to post types and to admin pages of plugins and the theme they cannot open otherwise, for example a theme options page for editors.
-- **Application passwords** – switch them off per role and see which users have application passwords, with role, creation date and last use.
+- **Application passwords** – switch them off per role, see which users have application passwords (with role, creation date and last use) and delete selected ones or all of them.
+- **Update overview** – all installed plugins and themes with version, pending update, automatic updates and the date of their latest release, so abandoned plugins stand out.
 
 ## Usage
 
@@ -93,7 +94,11 @@ One row per role (administrators always have full access) with two lists. Items 
 
 Admin pages are listed as the admin menu looked for an administrator on their last visit to the admin area. Pages that need capabilities for users, roles, plugins, themes, updates or the network cannot be shared (*not possible: needs protected permissions*), and the WordPress settings screens and this plugin's settings cannot be saved this way. Actions of a shared page that run via AJAX or `admin-post.php` may still need the capability itself.
 
-### Application passwords
+### Security
+
+The tab has two sections.
+
+**Application passwords**
 
 One checkbox per role, administrators included. Users with several roles keep their application passwords as long as one of their roles may use them; users without a role are not affected.
 
@@ -101,11 +106,24 @@ One checkbox per role, administrators included. Users with several roles keep th
 | --- | --- | --- |
 | Disable application passwords | off | Users of the role cannot sign in to the REST API or XML-RPC with an application password and no longer see the section in their profile. Existing application passwords stop working but are not deleted; they work again when the role is enabled. |
 
-Below the settings, *Existing application passwords* lists every application password on the site: user, role, name, creation date, last use and whether it is active or disabled by the role setting. To revoke one, open the user's profile while application passwords are enabled for their role.
+Below the settings, *Existing application passwords* lists every application password on the site: user, role, name, creation date, last use and whether it is active or disabled (by the role setting or because application passwords are switched off for the whole site). Tick the ones to remove and click *Delete selected*, or click *Delete all*. Deleted application passwords cannot be restored; disabling alone keeps them in the database.
+
+**Updates**
+
+Two tables, plugins and themes, with everything that is installed (inactive ones are marked):
+
+| Column | Description |
+| --- | --- |
+| Version | Installed version. |
+| Update | *Up to date*, *Update available* with the new version, or *Unknown: no update source* if neither WordPress.org nor an own updater reports on it. Taken from the last update check of WordPress. |
+| Automatic updates | Whether automatic updates are switched on for it. |
+| Last updated | Date of the latest release in the WordPress.org directory. Marked when it is more than two years old or the plugin was closed in the directory. *Not in the WordPress.org directory* for own and commercial plugins and themes. |
+
+The dates in *Last updated* are not loaded automatically: click *Fetch release dates from WordPress.org*. They are stored until the next click.
 
 ## Privacy
 
-The plugin stores its settings in the option `rmd_ss_settings` and the admin pages offered on the *Admin access* tab in `rmd_ss_admin_menu`; it sends no data anywhere. The support widget shows contact details and a logo that ship with the plugin; nothing is loaded from other servers. The only outgoing request is the update check, which reads `update.json` from the GitHub releases of this repository.
+The plugin stores its settings in the option `rmd_ss_settings` and the admin pages offered on the *Admin access* tab in `rmd_ss_admin_menu`; and the release dates shown on the *Security* tab in `rmd_ss_release_dates`. *Fetch release dates from WordPress.org* asks `api.wordpress.org` once per installed plugin and theme and sends its directory name, as the update check of WordPress does anyway; this happens only on that click. Apart from that the plugin sends no data anywhere. The support widget shows contact details and a logo that ship with the plugin; nothing is loaded from other servers. The only outgoing request is the update check, which reads `update.json` from the GitHub releases of this repository.
 
 ## Installation
 

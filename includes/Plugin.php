@@ -39,6 +39,7 @@ final class Plugin {
 
 		if ( is_admin() ) {
 			Modules\CommentCleanup::init();
+			Modules\Updates::init();
 			Admin\SettingsPage::init();
 		}
 	}

@@ -352,5 +352,123 @@ msgstr "Deaktiviert"
 msgid "Active"
 msgstr "Aktiv"
 
-msgid "To revoke an application password, open the profile of the user. The section is only shown there while application passwords are enabled for the role of the user."
-msgstr "Um ein Anwendungspasswort zu widerrufen, öffnen Sie das Profil des Benutzers. Der Abschnitt wird dort nur angezeigt, solange Anwendungspasswörter für die Rolle des Benutzers aktiviert sind."
+msgid "Deleted application passwords cannot be restored. Passwords with the status \"Disabled\" are not accepted at the moment, but would work again as soon as application passwords are enabled."
+msgstr "Gelöschte Anwendungspasswörter lassen sich nicht wiederherstellen. Passwörter mit dem Status „Deaktiviert“ werden derzeit nicht akzeptiert, würden aber wieder funktionieren, sobald Anwendungspasswörter aktiviert werden."
+
+msgid "Select all"
+msgstr "Alle auswählen"
+
+#. translators: 1: name of the application password, 2: user name
+msgid "Select %1$s of %2$s"
+msgstr "%1$s von %2$s auswählen"
+
+msgid "Delete selected"
+msgstr "Ausgewählte löschen"
+
+msgid "Delete all"
+msgstr "Alle löschen"
+
+msgid "Delete the selected application passwords permanently? Applications that use them can no longer sign in."
+msgstr "Die ausgewählten Anwendungspasswörter endgültig löschen? Anwendungen, die sie verwenden, können sich dann nicht mehr anmelden."
+
+msgid "Delete all application passwords of all users permanently? Applications that use them can no longer sign in."
+msgstr "Alle Anwendungspasswörter aller Benutzer endgültig löschen? Anwendungen, die sie verwenden, können sich dann nicht mehr anmelden."
+
+msgid "%s application password deleted."
+msgid_plural "%s application passwords deleted."
+msgstr[0] "%s Anwendungspasswort gelöscht."
+msgstr[1] "%s Anwendungspasswörter gelöscht."
+
+msgid "Nothing was deleted: select at least one application password."
+msgstr "Es wurde nichts gelöscht: Wählen Sie mindestens ein Anwendungspasswort aus."
+
+msgid "Not all application passwords could be deleted. Check the list below."
+msgstr "Nicht alle Anwendungspasswörter konnten gelöscht werden. Prüfen Sie die Liste unten."
+
+msgid "Security"
+msgstr "Sicherheit"
+
+msgid "Updates"
+msgstr "Aktualisierungen"
+
+msgid "Installed plugins and themes with their update status. \"Last updated\" is the date of the latest release in the WordPress.org directory: a plugin or theme without a release for more than two years is probably no longer maintained and should be replaced."
+msgstr "Installierte Plugins und Themes mit ihrem Aktualisierungsstand. „Zuletzt aktualisiert“ ist das Datum der neuesten Version im WordPress.org-Verzeichnis: Ein Plugin oder Theme ohne neue Version seit mehr als zwei Jahren wird vermutlich nicht mehr gepflegt und sollte ersetzt werden."
+
+msgid "Plugins"
+msgstr "Plugins"
+
+msgid "Themes"
+msgstr "Themes"
+
+msgid "None installed."
+msgstr "Keine installiert."
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Update"
+msgstr "Aktualisierung"
+
+msgid "Automatic updates"
+msgstr "Automatische Aktualisierungen"
+
+msgid "Last updated"
+msgstr "Zuletzt aktualisiert"
+
+msgid "inactive"
+msgstr "inaktiv"
+
+#. translators: %s: version number
+msgid "Update available: %s"
+msgstr "Aktualisierung verfügbar: %s"
+
+msgid "Up to date"
+msgstr "Aktuell"
+
+msgid "Unknown: no update source"
+msgstr "Unbekannt: keine Aktualisierungsquelle"
+
+msgid "On"
+msgstr "An"
+
+msgid "Off"
+msgstr "Aus"
+
+msgid "Not in the WordPress.org directory"
+msgstr "Nicht im WordPress.org-Verzeichnis"
+
+msgid "Not fetched yet"
+msgstr "Noch nicht abgerufen"
+
+msgid "Closed in the WordPress.org directory"
+msgstr "Im WordPress.org-Verzeichnis geschlossen"
+
+#. translators: %s: date
+msgid "%s (more than two years ago)"
+msgstr "%s (vor mehr als zwei Jahren)"
+
+#. translators: %s: date and time
+msgid "WordPress last checked for updates: %s."
+msgstr "WordPress hat zuletzt nach Aktualisierungen gesucht: %s."
+
+msgid "WordPress has not checked for updates yet."
+msgstr "WordPress hat noch nicht nach Aktualisierungen gesucht."
+
+#. translators: %s: date and time
+msgid "Release dates last fetched: %s."
+msgstr "Veröffentlichungsdaten zuletzt abgerufen: %s."
+
+msgid "Release dates have not been fetched yet."
+msgstr "Die Veröffentlichungsdaten wurden noch nicht abgerufen."
+
+msgid "Fetch release dates from WordPress.org"
+msgstr "Veröffentlichungsdaten von WordPress.org abrufen"
+
+msgid "Open the WordPress updates screen"
+msgstr "WordPress-Aktualisierungen öffnen"
+
+msgid "Release dates fetched from WordPress.org."
+msgstr "Veröffentlichungsdaten von WordPress.org abgerufen."
+
+msgid "Not all release dates could be fetched from WordPress.org. Please try again later."
+msgstr "Nicht alle Veröffentlichungsdaten konnten von WordPress.org abgerufen werden. Bitte versuchen Sie es später erneut."

@@ -10,11 +10,13 @@ namespace RMD\SiteSettings\Admin;
 use RMD\SiteSettings\Domain\AdminAccess;
 use RMD\SiteSettings\Domain\MenuAccess;
 use RMD\SiteSettings\Domain\Settings as SettingsData;
+use RMD\SiteSettings\Domain\UpdateStatus;
 use RMD\SiteSettings\Modules\AccessManager;
 use RMD\SiteSettings\Modules\AppPasswords;
 use RMD\SiteSettings\Modules\CommentCleanup;
 use RMD\SiteSettings\Modules\Comments;
 use RMD\SiteSettings\Modules\MenuManager;
+use RMD\SiteSettings\Modules\Updates;
 use RMD\SiteSettings\Plugin;
 use RMD\SiteSettings\Settings;
 
@@ -73,7 +75,9 @@ final class SettingsPage {
 			'rmd-ss-admin',
 			'rmdSsAdmin',
 			[
-				'confirmDelete' => __( 'Delete these comments permanently? This cannot be undone.', 'rmd-site-settings' ),
+				'confirmDelete'                => __( 'Delete these comments permanently? This cannot be undone.', 'rmd-site-settings' ),
+				'confirmDeleteAppPasswords'    => __( 'Delete the selected application passwords permanently? Applications that use them can no longer sign in.', 'rmd-site-settings' ),
+				'confirmDeleteAllAppPasswords' => __( 'Delete all application passwords of all users permanently? Applications that use them can no longer sign in.', 'rmd-site-settings' ),
 			]
 		);
 	}
@@ -83,13 +87,13 @@ final class SettingsPage {
 	 */
 	private static function tabs(): array {
 		return [
-			'comments'      => __( 'Comments', 'rmd-site-settings' ),
-			'xmlrpc'        => __( 'XML-RPC', 'rmd-site-settings' ),
-			'head'          => __( 'Page head', 'rmd-site-settings' ),
-			'admin'         => __( 'Admin area', 'rmd-site-settings' ),
-			'menus'         => __( 'Menus', 'rmd-site-settings' ),
-			'access'        => __( 'Admin access', 'rmd-site-settings' ),
-			'app_passwords' => __( 'Application passwords', 'rmd-site-settings' ),
+			'comments' => __( 'Comments', 'rmd-site-settings' ),
+			'xmlrpc'   => __( 'XML-RPC', 'rmd-site-settings' ),
+			'head'     => __( 'Page head', 'rmd-site-settings' ),
+			'admin'    => __( 'Admin area', 'rmd-site-settings' ),
+			'menus'    => __( 'Menus', 'rmd-site-settings' ),
+			'access'   => __( 'Admin access', 'rmd-site-settings' ),
+			'security' => __( 'Security', 'rmd-site-settings' ),
 		];
 	}
 
@@ -126,7 +130,7 @@ final class SettingsPage {
 			self::render_menus_intro();
 		} elseif ( 'access' === $tab ) {
 			self::render_access_intro();
-		} elseif ( 'app_passwords' === $tab ) {
+		} elseif ( 'security' === $tab ) {
 			self::render_app_passwords_intro();
 		}
 		echo '<table class="form-table" role="presentation"><tbody>';
@@ -136,7 +140,7 @@ final class SettingsPage {
 			'admin'         => self::render_admin(),
 			'menus'         => self::render_menus(),
 			'access'        => self::render_access(),
-			'app_passwords' => self::render_app_passwords(),
+			'security'      => self::render_app_passwords(),
 			default         => self::render_comments(),
 		};
 		echo '</tbody></table>';
@@ -145,8 +149,9 @@ final class SettingsPage {
 
 		if ( 'comments' === $tab ) {
 			self::render_cleanup();
-		} elseif ( 'app_passwords' === $tab ) {
+		} elseif ( 'security' === $tab ) {
 			self::render_app_password_list();
+			self::render_updates();
 		}
 
 		echo '</div>';
@@ -171,6 +176,18 @@ final class SettingsPage {
 			],
 			'delete_nothing'     => [ 'error', __( 'Nothing was deleted: choose what to delete.', 'rmd-site-settings' ) ],
 			'delete_unconfirmed' => [ 'error', __( 'Nothing was deleted: please confirm that the comments will be deleted permanently.', 'rmd-site-settings' ) ],
+			'app_deleted'        => [
+				'success',
+				sprintf(
+					/* translators: %s: number of application passwords */
+					_n( '%s application password deleted.', '%s application passwords deleted.', $count, 'rmd-site-settings' ),
+					number_format_i18n( $count )
+				),
+			],
+			'app_delete_nothing' => [ 'error', __( 'Nothing was deleted: select at least one application password.', 'rmd-site-settings' ) ],
+			'app_delete_failed'  => [ 'error', __( 'Not all application passwords could be deleted. Check the list below.', 'rmd-site-settings' ) ],
+			'releases_refreshed' => [ 'success', __( 'Release dates fetched from WordPress.org.', 'rmd-site-settings' ) ],
+			'releases_partial'   => [ 'warning', __( 'Not all release dates could be fetched from WordPress.org. Please try again later.', 'rmd-site-settings' ) ],
 		];
 		if ( isset( $messages[ $notice ] ) ) {
 			printf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', esc_attr( $messages[ $notice ][0] ), esc_html( $messages[ $notice ][1] ) );
@@ -398,6 +415,7 @@ final class SettingsPage {
 	}
 
 	private static function render_app_passwords_intro(): void {
+		echo '<h2>' . esc_html__( 'Application passwords', 'rmd-site-settings' ) . '</h2>';
 		echo '<p>' . esc_html__( 'Application passwords let apps and scripts sign in to the REST API and XML-RPC as a user, without the login form and without two-factor authentication. Switch them off for roles that do not need them: existing application passwords of these roles stop working at once but are not deleted, and the users can no longer create new ones in their profile.', 'rmd-site-settings' ) . '</p>';
 		echo '<p>' . esc_html__( 'Users with several roles keep their application passwords as long as one of their roles may use them.', 'rmd-site-settings' ) . '</p>';
 		if ( ! wp_is_application_passwords_available() ) {
@@ -436,7 +454,7 @@ final class SettingsPage {
 	private static function render_app_password_list(): void {
 		$entries = AppPasswords::entries();
 
-		echo '<hr><h2>' . esc_html__( 'Existing application passwords', 'rmd-site-settings' ) . '</h2>';
+		echo '<h3>' . esc_html__( 'Existing application passwords', 'rmd-site-settings' ) . '</h3>';
 		if ( [] === $entries ) {
 			echo '<p class="description">' . esc_html__( 'No user has an application password.', 'rmd-site-settings' ) . '</p>';
 			return;
@@ -445,14 +463,21 @@ final class SettingsPage {
 		$role_names = wp_roles()->get_names();
 		$format     = (string) get_option( 'date_format' );
 
+		printf( '<form method="post" action="%s" class="rmd-ss-app-passwords-form">', esc_url( admin_url( 'admin-post.php' ) ) );
+		printf( '<input type="hidden" name="action" value="%s">', esc_attr( AppPasswords::ACTION ) );
+		wp_nonce_field( AppPasswords::ACTION );
+
+		// The check-column classes make the WordPress admin script handle "select all".
 		echo '<table class="widefat striped rmd-ss-app-passwords"><thead><tr>';
+		echo '<td class="manage-column check-column"><input type="checkbox" id="rmd-ss-app-passwords-all"><label for="rmd-ss-app-passwords-all"><span class="screen-reader-text">' . esc_html__( 'Select all', 'rmd-site-settings' ) . '</span></label></td>';
 		foreach ( [ __( 'User', 'rmd-site-settings' ), __( 'Role', 'rmd-site-settings' ), __( 'Name', 'rmd-site-settings' ), __( 'Created', 'rmd-site-settings' ), __( 'Last used', 'rmd-site-settings' ), __( 'Status', 'rmd-site-settings' ) ] as $heading ) {
 			echo '<th scope="col">' . esc_html( $heading ) . '</th>';
 		}
 		echo '</tr></thead><tbody>';
 
-		foreach ( $entries as $entry ) {
+		foreach ( $entries as $index => $entry ) {
 			$user  = $entry['user'];
+			$id    = 'rmd-ss-app-password-' . $index;
 			$roles = [];
 			foreach ( (array) $user->roles as $role ) {
 				$roles[] = isset( $role_names[ $role ] ) ? translate_user_role( $role_names[ $role ] ) : (string) $role;
@@ -467,6 +492,14 @@ final class SettingsPage {
 			}
 
 			echo '<tr>';
+			printf(
+				'<th scope="row" class="check-column"><input type="checkbox" id="%s" name="app_passwords[]" value="%s"><label for="%s"><span class="screen-reader-text">%s</span></label></th>',
+				esc_attr( $id ),
+				esc_attr( AppPasswords::key( (int) $user->ID, $entry['uuid'] ) ),
+				esc_attr( $id ),
+				/* translators: 1: name of the application password, 2: user name */
+				esc_html( sprintf( __( 'Select %1$s of %2$s', 'rmd-site-settings' ), $entry['name'], $user->display_name ) )
+			);
 			echo '<td>' . $label . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
 			echo '<td>' . esc_html( [] === $roles ? __( 'No role', 'rmd-site-settings' ) : implode( ', ', $roles ) ) . '</td>';
 			echo '<td>' . esc_html( $entry['name'] ) . '</td>';
@@ -480,7 +513,106 @@ final class SettingsPage {
 			echo '</tr>';
 		}
 		echo '</tbody></table>';
-		echo '<p class="description">' . esc_html__( 'To revoke an application password, open the profile of the user. The section is only shown there while application passwords are enabled for the role of the user.', 'rmd-site-settings' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Deleted application passwords cannot be restored. Passwords with the status "Disabled" are not accepted at the moment, but would work again as soon as application passwords are enabled.', 'rmd-site-settings' ) . '</p>';
+		echo '<p class="submit">';
+		submit_button( __( 'Delete selected', 'rmd-site-settings' ), 'delete', 'delete_selected', false );
+		echo ' ';
+		submit_button( __( 'Delete all', 'rmd-site-settings' ), 'delete', 'delete_all', false );
+		echo '</p></form>';
+	}
+
+	private static function render_updates(): void {
+		$items    = Updates::items();
+		$releases = Updates::releases();
+		$format   = (string) get_option( 'date_format' );
+		$checked  = Updates::last_checked();
+
+		echo '<hr><h2>' . esc_html__( 'Updates', 'rmd-site-settings' ) . '</h2>';
+		echo '<p>' . esc_html__( 'Installed plugins and themes with their update status. "Last updated" is the date of the latest release in the WordPress.org directory: a plugin or theme without a release for more than two years is probably no longer maintained and should be replaced.', 'rmd-site-settings' ) . '</p>';
+
+		self::updates_table( __( 'Plugins', 'rmd-site-settings' ), $items['plugins'], $format );
+		self::updates_table( __( 'Themes', 'rmd-site-settings' ), $items['themes'], $format );
+
+		echo '<p class="description">';
+		echo esc_html(
+			$checked > 0
+				/* translators: %s: date and time */
+				? sprintf( __( 'WordPress last checked for updates: %s.', 'rmd-site-settings' ), (string) wp_date( $format . ' ' . get_option( 'time_format' ), $checked ) )
+				: __( 'WordPress has not checked for updates yet.', 'rmd-site-settings' )
+		);
+		echo ' ';
+		echo esc_html(
+			$releases['checked'] > 0
+				/* translators: %s: date and time */
+				? sprintf( __( 'Release dates last fetched: %s.', 'rmd-site-settings' ), (string) wp_date( $format . ' ' . get_option( 'time_format' ), $releases['checked'] ) )
+				: __( 'Release dates have not been fetched yet.', 'rmd-site-settings' )
+		);
+		echo '</p>';
+
+		printf( '<form method="post" action="%s" class="rmd-ss-updates-form">', esc_url( admin_url( 'admin-post.php' ) ) );
+		printf( '<input type="hidden" name="action" value="%s">', esc_attr( Updates::ACTION ) );
+		wp_nonce_field( Updates::ACTION );
+		echo '<p class="submit">';
+		submit_button( __( 'Fetch release dates from WordPress.org', 'rmd-site-settings' ), 'secondary', 'submit', false );
+		if ( current_user_can( 'update_core' ) ) {
+			printf( ' <a class="button" href="%s">%s</a>', esc_url( self_admin_url( 'update-core.php' ) ), esc_html__( 'Open the WordPress updates screen', 'rmd-site-settings' ) );
+		}
+		echo '</p></form>';
+	}
+
+	/**
+	 * @param list<array{name: string, version: string, active: bool, known: bool, new_version: string, auto_update: bool, slug: ?string, release: ?array{state: string, date: int}}> $rows As returned by Updates::items().
+	 */
+	private static function updates_table( string $title, array $rows, string $date_format ): void {
+		echo '<h3>' . esc_html( $title ) . '</h3>';
+		if ( [] === $rows ) {
+			echo '<p class="description">' . esc_html__( 'None installed.', 'rmd-site-settings' ) . '</p>';
+			return;
+		}
+
+		echo '<table class="widefat striped rmd-ss-updates"><thead><tr>';
+		foreach ( [ __( 'Name', 'rmd-site-settings' ), __( 'Version', 'rmd-site-settings' ), __( 'Update', 'rmd-site-settings' ), __( 'Automatic updates', 'rmd-site-settings' ), __( 'Last updated', 'rmd-site-settings' ) ] as $heading ) {
+			echo '<th scope="col">' . esc_html( $heading ) . '</th>';
+		}
+		echo '</tr></thead><tbody>';
+
+		$now = time();
+		foreach ( $rows as $row ) {
+			echo '<tr>';
+			echo '<td>' . esc_html( $row['name'] );
+			if ( ! $row['active'] ) {
+				echo ' <span class="rmd-ss-count">(' . esc_html__( 'inactive', 'rmd-site-settings' ) . ')</span>';
+			}
+			echo '</td>';
+			echo '<td>' . esc_html( '' !== $row['version'] ? $row['version'] : '–' ) . '</td>';
+
+			if ( '' !== $row['new_version'] ) {
+				/* translators: %s: version number */
+				echo '<td><span class="rmd-ss-warn">' . esc_html( sprintf( __( 'Update available: %s', 'rmd-site-settings' ), $row['new_version'] ) ) . '</span></td>';
+			} elseif ( $row['known'] ) {
+				echo '<td>' . esc_html__( 'Up to date', 'rmd-site-settings' ) . '</td>';
+			} else {
+				echo '<td><span class="rmd-ss-count">' . esc_html__( 'Unknown: no update source', 'rmd-site-settings' ) . '</span></td>';
+			}
+
+			echo '<td>' . esc_html( $row['auto_update'] ? __( 'On', 'rmd-site-settings' ) : __( 'Off', 'rmd-site-settings' ) ) . '</td>';
+
+			$release = $row['release'];
+			if ( null === $row['slug'] || ( null !== $release && UpdateStatus::MISSING === $release['state'] ) ) {
+				echo '<td><span class="rmd-ss-count">' . esc_html__( 'Not in the WordPress.org directory', 'rmd-site-settings' ) . '</span></td>';
+			} elseif ( null === $release ) {
+				echo '<td><span class="rmd-ss-count">' . esc_html__( 'Not fetched yet', 'rmd-site-settings' ) . '</span></td>';
+			} elseif ( UpdateStatus::CLOSED === $release['state'] ) {
+				echo '<td><span class="rmd-ss-warn">' . esc_html__( 'Closed in the WordPress.org directory', 'rmd-site-settings' ) . '</span></td>';
+			} elseif ( UpdateStatus::is_outdated( $release['date'], $now ) ) {
+				/* translators: %s: date */
+				echo '<td><span class="rmd-ss-warn">' . esc_html( sprintf( __( '%s (more than two years ago)', 'rmd-site-settings' ), (string) wp_date( $date_format, $release['date'] ) ) ) . '</span></td>';
+			} else {
+				echo '<td>' . esc_html( (string) wp_date( $date_format, $release['date'] ) ) . '</td>';
+			}
+			echo '</tr>';
+		}
+		echo '</tbody></table>';
 	}
 
 	/**
