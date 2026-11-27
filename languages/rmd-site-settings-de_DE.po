@@ -1,7 +1,7 @@
 # German translation of RMD Site Settings (formal "Sie").
 msgid ""
 msgstr ""
-"Project-Id-Version: RMD Site Settings 0.6.0\n"
+"Project-Id-Version: RMD Site Settings 0.6.1\n"
 "Report-Msgid-Bugs-To: https://github.com/reicheltmediadesign/wordpress-rmd-site-settings/issues\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -449,9 +449,17 @@ msgstr "Noch nicht abgerufen"
 msgid "Closed in the WordPress.org directory"
 msgstr "Im WordPress.org-Verzeichnis geschlossen"
 
-#. translators: %s: date
-msgid "%s (more than two years ago)"
-msgstr "%s (vor mehr als zwei Jahren)"
+msgid "The colour shows how long ago that release was: up to 30 days green, up to 90 days light green, up to 180 days yellow, up to 365 days orange, older red. It is a rough guide for a quick look, not a verdict: a small plugin can be fine without frequent releases."
+msgstr "Die Farbe zeigt, wie lange diese Version her ist: bis 30 Tage grün, bis 90 Tage hellgrün, bis 180 Tage gelb, bis 365 Tage orange, älter rot. Das ist eine grobe Orientierung für den schnellen Blick, kein Urteil: Ein kleines Plugin kann auch ohne häufige neue Versionen in Ordnung sein."
+
+msgid "today"
+msgstr "heute"
+
+#. translators: %s: number of days
+msgid "%s day ago"
+msgid_plural "%s days ago"
+msgstr[0] "vor %s Tag"
+msgstr[1] "vor %s Tagen"
 
 #. translators: %s: date and time
 msgid "WordPress last checked for updates: %s."

@@ -121,7 +121,7 @@ Two tables, plugins and themes, with everything that is installed (inactive ones
 | Version | Installed version. |
 | Update | *Up to date*, *Update available* with the new version, or *Unknown: no update source* if neither WordPress.org nor an own updater reports on it. Taken from the last update check of WordPress. |
 | Automatic updates | Whether automatic updates are switched on for it. |
-| Last updated | Date of the latest release in the WordPress.org directory. Marked when it is more than two years old or the plugin was closed in the directory. *Not in the WordPress.org directory* for own and commercial plugins and themes. |
+| Last updated | Days since the latest release in the WordPress.org directory and its date. The days are coloured: up to 30 green, up to 90 light green, up to 180 yellow, up to 365 orange, older red – a rough guide for a quick look, not a verdict. Plugins closed in the directory are marked. *Not in the WordPress.org directory* for own and commercial plugins and themes. |
 
 The dates in *Last updated* are not loaded automatically: click *Fetch release dates from WordPress.org*. They are stored until the next click.
 

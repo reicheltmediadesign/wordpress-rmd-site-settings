@@ -547,6 +547,7 @@ final class SettingsPage {
 
 		echo '<hr><h2>' . esc_html__( 'Updates', 'rmd-site-settings' ) . '</h2>';
 		echo '<p>' . esc_html__( 'Installed plugins and themes with their update status. "Last updated" is the date of the latest release in the WordPress.org directory: a plugin or theme without a release for more than two years is probably no longer maintained and should be replaced.', 'rmd-site-settings' ) . '</p>';
+		echo '<p>' . esc_html__( 'The colour shows how long ago that release was: up to 30 days green, up to 90 days light green, up to 180 days yellow, up to 365 days orange, older red. It is a rough guide for a quick look, not a verdict: a small plugin can be fine without frequent releases.', 'rmd-site-settings' ) . '</p>';
 
 		self::updates_table( __( 'Plugins', 'rmd-site-settings' ), $items['plugins'], $format );
 		self::updates_table( __( 'Themes', 'rmd-site-settings' ), $items['themes'], $format );
@@ -622,11 +623,19 @@ final class SettingsPage {
 				echo '<td><span class="rmd-ss-count">' . esc_html__( 'Not fetched yet', 'rmd-site-settings' ) . '</span></td>';
 			} elseif ( UpdateStatus::CLOSED === $release['state'] ) {
 				echo '<td><span class="rmd-ss-warn">' . esc_html__( 'Closed in the WordPress.org directory', 'rmd-site-settings' ) . '</span></td>';
-			} elseif ( UpdateStatus::is_outdated( $release['date'], $now ) ) {
-				/* translators: %s: date */
-				echo '<td><span class="rmd-ss-warn">' . esc_html( sprintf( __( '%s (more than two years ago)', 'rmd-site-settings' ), (string) wp_date( $date_format, $release['date'] ) ) ) . '</span></td>';
 			} else {
-				echo '<td>' . esc_html( (string) wp_date( $date_format, $release['date'] ) ) . '</td>';
+				$days = UpdateStatus::days_since( $release['date'], $now );
+				printf(
+					'<td><span class="rmd-ss-age rmd-ss-age-%s">%s</span> %s</td>',
+					esc_attr( UpdateStatus::age_level( $days ) ),
+					esc_html(
+						0 === $days
+							? __( 'today', 'rmd-site-settings' )
+							/* translators: %s: number of days */
+							: sprintf( _n( '%s day ago', '%s days ago', $days, 'rmd-site-settings' ), number_format_i18n( $days ) )
+					),
+					esc_html( (string) wp_date( $date_format, $release['date'] ) )
+				);
 			}
 			echo '</tr>';
 		}

@@ -23,8 +23,19 @@ final class UpdateStatus {
 
 	public const STATES = [ self::FOUND, self::CLOSED, self::MISSING ];
 
-	/** Without a release for this long a plugin or theme counts as no longer maintained. */
-	public const OUTDATED_AFTER = 2 * 365 * 86400;
+	/**
+	 * Age levels of the latest release, from fresh to stale: name => highest
+	 * number of days. Everything older is AGE_STALE. A rough guide for a quick
+	 * look, not a verdict on the plugin.
+	 */
+	public const AGE_LEVELS = [
+		'fresh'  => 30,
+		'recent' => 90,
+		'aging'  => 180,
+		'old'    => 365,
+	];
+
+	public const AGE_STALE = 'stale';
 
 	/**
 	 * Reads the stored release dates (see Modules\Updates::refresh()).
@@ -63,8 +74,23 @@ final class UpdateStatus {
 		return false === $timestamp || $timestamp <= 0 ? 0 : $timestamp;
 	}
 
-	public static function is_outdated( int $date, int $now ): bool {
-		return $date > 0 && $now - $date > self::OUTDATED_AFTER;
+	/**
+	 * Whole days between a release and now; 0 for a date in the future.
+	 */
+	public static function days_since( int $date, int $now ): int {
+		return max( 0, intdiv( $now - $date, 86400 ) );
+	}
+
+	/**
+	 * @return string A key of AGE_LEVELS or AGE_STALE.
+	 */
+	public static function age_level( int $days ): string {
+		foreach ( self::AGE_LEVELS as $level => $max_days ) {
+			if ( $days <= $max_days ) {
+				return $level;
+			}
+		}
+		return self::AGE_STALE;
 	}
 
 	/**
