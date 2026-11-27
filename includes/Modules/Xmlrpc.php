@@ -30,6 +30,22 @@ final class Xmlrpc {
 	}
 
 	/**
+	 * Whether something else (a must-use plugin, another plugin) switches
+	 * XML-RPC off, so the setting of this plugin makes no difference.
+	 */
+	public static function enforced_elsewhere(): bool {
+		$own = (bool) Settings::section( 'xmlrpc' )['disable'];
+		if ( $own ) {
+			remove_filter( 'xmlrpc_enabled', '__return_false' );
+		}
+		$enabled = (bool) apply_filters( 'xmlrpc_enabled', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter.
+		if ( $own ) {
+			add_filter( 'xmlrpc_enabled', '__return_false' );
+		}
+		return ! $enabled;
+	}
+
+	/**
 	 * Even with no methods the server would still answer system.listMethods.
 	 * wp_die() is no option here: its XML-RPC handler prints nothing before the server exists.
 	 */
