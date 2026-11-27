@@ -4,7 +4,7 @@ Tags: disable comments, xmlrpc, wp_head, dashboard, settings
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.5.0
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,12 @@ No. Notes (WordPress 6.9+) are stored as comments of the type "note"; they keep 
 Everything returns to the WordPress defaults. Comments deleted with the delete tool stay deleted.
 
 == Changelog ==
+
+= 0.6.0 =
+* New: Security tab with two sections.
+* New: disable application passwords per role, list the existing ones with user and role and delete selected ones or all.
+* New: overview of installed plugins and themes with pending updates, automatic updates and the date of their latest release on WordPress.org.
+* XML-RPC and application passwords that are already switched off elsewhere (for example by a must-use plugin) are shown as such.
 
 = 0.5.0 =
 * New: Admin access tab – give roles access to post types and to admin pages of plugins and the theme they cannot open otherwise.
