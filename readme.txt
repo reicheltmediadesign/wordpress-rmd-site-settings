@@ -4,7 +4,7 @@ Tags: disable comments, xmlrpc, wp_head, dashboard, settings
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.6.0
+Stable tag: 0.6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ No. Notes (WordPress 6.9+) are stored as comments of the type "note"; they keep 
 Everything returns to the WordPress defaults. Comments deleted with the delete tool stay deleted.
 
 == Changelog ==
+
+= 0.6.1 =
+* Security tab: the update overview shows the days since the latest release of each plugin and theme, coloured from green to red.
 
 = 0.6.0 =
 * New: Security tab with two sections.

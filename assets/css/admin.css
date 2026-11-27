@@ -22,7 +22,13 @@
  *   .rmd-ss-app-passwords-off  status of a password that is not accepted at the moment
  *   .rmd-ss-updates            table of installed plugins or themes (Security tab)
  *   .rmd-ss-updates-form       form with the button that fetches the release dates
- *   .rmd-ss-warn               value that needs attention (pending update, old release)
+ *   .rmd-ss-warn               value that needs attention (pending update, closed plugin)
+ *   .rmd-ss-age                badge with the days since the latest release
+ *   .rmd-ss-age-fresh          … up to 30 days (green)
+ *   .rmd-ss-age-recent         … up to 90 days (light green)
+ *   .rmd-ss-age-aging          … up to 180 days (yellow)
+ *   .rmd-ss-age-old            … up to 365 days (orange)
+ *   .rmd-ss-age-stale          … older (red)
  */
 
 .rmd-ss .rmd-ss-indent {
@@ -151,4 +157,41 @@
 .rmd-ss .rmd-ss-updates {
 	max-width: 1000px;
 	margin-bottom: 8px;
+}
+
+.rmd-ss .rmd-ss-age {
+	display: inline-block;
+	min-width: 96px;
+	margin-right: 6px;
+	padding: 1px 8px;
+	border-radius: 3px;
+	font-weight: 600;
+	text-align: center;
+	white-space: nowrap;
+	box-sizing: border-box;
+}
+
+.rmd-ss .rmd-ss-age-fresh {
+	background: #b8e6bf;
+	color: #003008;
+}
+
+.rmd-ss .rmd-ss-age-recent {
+	background: #e0f0b5;
+	color: #2f3b00;
+}
+
+.rmd-ss .rmd-ss-age-aging {
+	background: #f5e6ab;
+	color: #4a3a00;
+}
+
+.rmd-ss .rmd-ss-age-old {
+	background: #f9cfa4;
+	color: #5c2c00;
+}
+
+.rmd-ss .rmd-ss-age-stale {
+	background: #facfd2;
+	color: #8a2424;
 }

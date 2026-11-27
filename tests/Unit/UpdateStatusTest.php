@@ -19,11 +19,26 @@ final class UpdateStatusTest extends TestCase {
 		$this->assertSame( 0, UpdateStatus::timestamp( 'yesterday' ) );
 	}
 
-	public function test_outdated_after_two_years(): void {
-		$now = gmmktime( 0, 0, 0, 11, 27, 2026 );
-		$this->assertTrue( UpdateStatus::is_outdated( gmmktime( 0, 0, 0, 11, 1, 2024 ), $now ) );
-		$this->assertFalse( UpdateStatus::is_outdated( gmmktime( 0, 0, 0, 12, 15, 2024 ), $now ) );
-		$this->assertFalse( UpdateStatus::is_outdated( 0, $now ) );
+	public function test_days_since_counts_whole_days(): void {
+		$now = gmmktime( 12, 0, 0, 11, 27, 2026 );
+		$this->assertSame( 0, UpdateStatus::days_since( gmmktime( 9, 0, 0, 11, 27, 2026 ), $now ) );
+		$this->assertSame( 0, UpdateStatus::days_since( gmmktime( 13, 0, 0, 11, 26, 2026 ), $now ) );
+		$this->assertSame( 1, UpdateStatus::days_since( gmmktime( 12, 0, 0, 11, 26, 2026 ), $now ) );
+		$this->assertSame( 18, UpdateStatus::days_since( gmmktime( 12, 0, 0, 11, 9, 2026 ), $now ) );
+		$this->assertSame( 0, UpdateStatus::days_since( gmmktime( 12, 0, 0, 12, 1, 2026 ), $now ) );
+	}
+
+	public function test_age_levels_step_from_fresh_to_stale(): void {
+		$this->assertSame( 'fresh', UpdateStatus::age_level( 0 ) );
+		$this->assertSame( 'fresh', UpdateStatus::age_level( 30 ) );
+		$this->assertSame( 'recent', UpdateStatus::age_level( 31 ) );
+		$this->assertSame( 'recent', UpdateStatus::age_level( 90 ) );
+		$this->assertSame( 'aging', UpdateStatus::age_level( 91 ) );
+		$this->assertSame( 'aging', UpdateStatus::age_level( 180 ) );
+		$this->assertSame( 'old', UpdateStatus::age_level( 181 ) );
+		$this->assertSame( 'old', UpdateStatus::age_level( 365 ) );
+		$this->assertSame( UpdateStatus::AGE_STALE, UpdateStatus::age_level( 366 ) );
+		$this->assertSame( UpdateStatus::AGE_STALE, UpdateStatus::age_level( 5000 ) );
 	}
 
 	public function test_invalid_stored_data_gives_empty_lists(): void {
