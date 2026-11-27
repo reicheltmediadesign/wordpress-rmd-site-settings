@@ -5,6 +5,12 @@ All notable changes to this plugin are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.6.1] – 2026-11-27
+
+### Changed
+
+- Updates: the "Last updated" column shows the days since the latest release in front of the date, coloured by age (up to 30 days green, 90 light green, 180 yellow, 365 orange, older red). This replaces the "more than two years ago" marker.
+
 ## [0.6.0] – 2026-11-27
 
 ### Added
