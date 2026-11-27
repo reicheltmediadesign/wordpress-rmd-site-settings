@@ -23,6 +23,7 @@ RMD Site Settings collects basic switches that most business sites need, on one 
 * Hide the welcome panel, the "WordPress Events and News" and "Quick Draft" widgets and set an own admin footer text.
 * Let other roles, for example editors, edit or view the navigation menus via an own "Menus" item in the admin menu.
 * Give roles access to post types and to admin pages of plugins and the theme they cannot open otherwise.
+* Disable application passwords per role and list the existing ones with user and role.
 
 == Installation ==
 

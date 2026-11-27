@@ -11,6 +11,7 @@ use RMD\SiteSettings\Domain\AdminAccess;
 use RMD\SiteSettings\Domain\MenuAccess;
 use RMD\SiteSettings\Domain\Settings as SettingsData;
 use RMD\SiteSettings\Modules\AccessManager;
+use RMD\SiteSettings\Modules\AppPasswords;
 use RMD\SiteSettings\Modules\CommentCleanup;
 use RMD\SiteSettings\Modules\Comments;
 use RMD\SiteSettings\Modules\MenuManager;
@@ -82,12 +83,13 @@ final class SettingsPage {
 	 */
 	private static function tabs(): array {
 		return [
-			'comments' => __( 'Comments', 'rmd-site-settings' ),
-			'xmlrpc'   => __( 'XML-RPC', 'rmd-site-settings' ),
-			'head'     => __( 'Page head', 'rmd-site-settings' ),
-			'admin'    => __( 'Admin area', 'rmd-site-settings' ),
-			'menus'    => __( 'Menus', 'rmd-site-settings' ),
-			'access'   => __( 'Admin access', 'rmd-site-settings' ),
+			'comments'      => __( 'Comments', 'rmd-site-settings' ),
+			'xmlrpc'        => __( 'XML-RPC', 'rmd-site-settings' ),
+			'head'          => __( 'Page head', 'rmd-site-settings' ),
+			'admin'         => __( 'Admin area', 'rmd-site-settings' ),
+			'menus'         => __( 'Menus', 'rmd-site-settings' ),
+			'access'        => __( 'Admin access', 'rmd-site-settings' ),
+			'app_passwords' => __( 'Application passwords', 'rmd-site-settings' ),
 		];
 	}
 
@@ -124,15 +126,18 @@ final class SettingsPage {
 			self::render_menus_intro();
 		} elseif ( 'access' === $tab ) {
 			self::render_access_intro();
+		} elseif ( 'app_passwords' === $tab ) {
+			self::render_app_passwords_intro();
 		}
 		echo '<table class="form-table" role="presentation"><tbody>';
 		match ( $tab ) {
-			'xmlrpc' => self::render_xmlrpc(),
-			'head'   => self::render_head(),
-			'admin'  => self::render_admin(),
-			'menus'  => self::render_menus(),
-			'access' => self::render_access(),
-			default  => self::render_comments(),
+			'xmlrpc'        => self::render_xmlrpc(),
+			'head'          => self::render_head(),
+			'admin'         => self::render_admin(),
+			'menus'         => self::render_menus(),
+			'access'        => self::render_access(),
+			'app_passwords' => self::render_app_passwords(),
+			default         => self::render_comments(),
 		};
 		echo '</tbody></table>';
 		submit_button();
@@ -140,6 +145,8 @@ final class SettingsPage {
 
 		if ( 'comments' === $tab ) {
 			self::render_cleanup();
+		} elseif ( 'app_passwords' === $tab ) {
+			self::render_app_password_list();
 		}
 
 		echo '</div>';
@@ -388,6 +395,92 @@ final class SettingsPage {
 
 			self::row_end();
 		}
+	}
+
+	private static function render_app_passwords_intro(): void {
+		echo '<p>' . esc_html__( 'Application passwords let apps and scripts sign in to the REST API and XML-RPC as a user, without the login form and without two-factor authentication. Switch them off for roles that do not need them: existing application passwords of these roles stop working at once but are not deleted, and the users can no longer create new ones in their profile.', 'rmd-site-settings' ) . '</p>';
+		echo '<p>' . esc_html__( 'Users with several roles keep their application passwords as long as one of their roles may use them.', 'rmd-site-settings' ) . '</p>';
+		if ( ! wp_is_application_passwords_available() ) {
+			echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'Application passwords are currently not available on this site at all: they need HTTPS, or another plugin has switched them off.', 'rmd-site-settings' ) . '</p></div>';
+		}
+	}
+
+	private static function render_app_passwords(): void {
+		$disabled = Settings::section( 'app_passwords' )['disabled_roles'];
+		$counts   = count_users()['avail_roles'];
+		$field    = self::name( 'app_passwords' ) . '[disabled_roles][]';
+		$first    = true;
+
+		foreach ( wp_roles()->get_names() as $role => $name ) {
+			$role = (string) $role;
+			$id   = 'rmd-ss-app-passwords-' . sanitize_html_class( $role );
+
+			self::row_start( translate_user_role( $name ), '', '', self::role_users( $role, (int) ( $counts[ $role ] ?? 0 ) ) );
+			if ( $first ) {
+				printf( '<input type="hidden" name="%s" value="">', esc_attr( $field ) );
+				$first = false;
+			}
+			printf(
+				'<label for="%s"><input type="checkbox" id="%s" name="%s" value="%s" %s> %s</label>',
+				esc_attr( $id ),
+				esc_attr( $id ),
+				esc_attr( $field ),
+				esc_attr( $role ),
+				checked( in_array( $role, $disabled, true ), true, false ),
+				esc_html__( 'Disable application passwords', 'rmd-site-settings' )
+			);
+			self::row_end();
+		}
+	}
+
+	private static function render_app_password_list(): void {
+		$entries = AppPasswords::entries();
+
+		echo '<hr><h2>' . esc_html__( 'Existing application passwords', 'rmd-site-settings' ) . '</h2>';
+		if ( [] === $entries ) {
+			echo '<p class="description">' . esc_html__( 'No user has an application password.', 'rmd-site-settings' ) . '</p>';
+			return;
+		}
+
+		$role_names = wp_roles()->get_names();
+		$format     = (string) get_option( 'date_format' );
+
+		echo '<table class="widefat striped rmd-ss-app-passwords"><thead><tr>';
+		foreach ( [ __( 'User', 'rmd-site-settings' ), __( 'Role', 'rmd-site-settings' ), __( 'Name', 'rmd-site-settings' ), __( 'Created', 'rmd-site-settings' ), __( 'Last used', 'rmd-site-settings' ), __( 'Status', 'rmd-site-settings' ) ] as $heading ) {
+			echo '<th scope="col">' . esc_html( $heading ) . '</th>';
+		}
+		echo '</tr></thead><tbody>';
+
+		foreach ( $entries as $entry ) {
+			$user  = $entry['user'];
+			$roles = [];
+			foreach ( (array) $user->roles as $role ) {
+				$roles[] = isset( $role_names[ $role ] ) ? translate_user_role( $role_names[ $role ] ) : (string) $role;
+			}
+
+			$label = esc_html( $user->display_name );
+			if ( current_user_can( 'edit_user', $user->ID ) ) {
+				$label = sprintf( '<a href="%s">%s</a>', esc_url( get_edit_user_link( $user->ID ) . '#application-passwords-section' ), $label );
+			}
+			if ( $user->display_name !== $user->user_login ) {
+				$label .= ' <span class="rmd-ss-role-users-login">' . esc_html( $user->user_login ) . '</span>';
+			}
+
+			echo '<tr>';
+			echo '<td>' . $label . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
+			echo '<td>' . esc_html( [] === $roles ? __( 'No role', 'rmd-site-settings' ) : implode( ', ', $roles ) ) . '</td>';
+			echo '<td>' . esc_html( $entry['name'] ) . '</td>';
+			echo '<td>' . esc_html( $entry['created'] > 0 ? (string) wp_date( $format, $entry['created'] ) : '–' ) . '</td>';
+			echo '<td>' . esc_html( $entry['last_used'] > 0 ? (string) wp_date( $format, $entry['last_used'] ) : __( 'Never', 'rmd-site-settings' ) ) . '</td>';
+			if ( $entry['disabled'] ) {
+				echo '<td><span class="rmd-ss-app-passwords-off">' . esc_html__( 'Disabled', 'rmd-site-settings' ) . '</span></td>';
+			} else {
+				echo '<td>' . esc_html__( 'Active', 'rmd-site-settings' ) . '</td>';
+			}
+			echo '</tr>';
+		}
+		echo '</tbody></table>';
+		echo '<p class="description">' . esc_html__( 'To revoke an application password, open the profile of the user. The section is only shown there while application passwords are enabled for the role of the user.', 'rmd-site-settings' ) . '</p>';
 	}
 
 	/**

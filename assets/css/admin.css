@@ -17,6 +17,8 @@
  *   .rmd-ss-role-users-more    "and n more" entry of the list
  *   .rmd-ss-access-group       fieldset of post types or admin pages (Admin access tab)
  *   .rmd-ss-access-note        hint after a post type or admin page
+ *   .rmd-ss-app-passwords      table of the existing application passwords
+ *   .rmd-ss-app-passwords-off  status of a password whose role is switched off
  */
 
 .rmd-ss .rmd-ss-indent {
@@ -127,4 +129,13 @@
 
 .rmd-ss .rmd-ss-access-note {
 	color: #646970;
+}
+
+.rmd-ss .rmd-ss-app-passwords {
+	max-width: 1000px;
+	margin-bottom: 8px;
+}
+
+.rmd-ss .rmd-ss-app-passwords-off {
+	color: #b32d2e;
 }

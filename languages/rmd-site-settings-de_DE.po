@@ -300,3 +300,57 @@ msgstr "hat bereits Zugriff"
 
 msgid "not possible: needs protected permissions"
 msgstr "nicht möglich: benötigt geschützte Berechtigungen"
+
+msgid "Application passwords"
+msgstr "Anwendungspasswörter"
+
+msgid "Application passwords let apps and scripts sign in to the REST API and XML-RPC as a user, without the login form and without two-factor authentication. Switch them off for roles that do not need them: existing application passwords of these roles stop working at once but are not deleted, and the users can no longer create new ones in their profile."
+msgstr "Mit Anwendungspasswörtern melden sich Apps und Skripte als Benutzer an der REST-API und an XML-RPC an, ohne Anmeldeformular und ohne Zwei-Faktor-Authentifizierung. Schalten Sie sie für Rollen ab, die sie nicht benötigen: Vorhandene Anwendungspasswörter dieser Rollen funktionieren sofort nicht mehr, werden aber nicht gelöscht, und die Benutzer können in ihrem Profil keine neuen mehr anlegen."
+
+msgid "Users with several roles keep their application passwords as long as one of their roles may use them."
+msgstr "Benutzer mit mehreren Rollen behalten ihre Anwendungspasswörter, solange eine ihrer Rollen sie verwenden darf."
+
+msgid "Application passwords are currently not available on this site at all: they need HTTPS, or another plugin has switched them off."
+msgstr "Anwendungspasswörter stehen auf dieser Website derzeit generell nicht zur Verfügung: Sie setzen HTTPS voraus, oder ein anderes Plugin hat sie abgeschaltet."
+
+msgid "Disable application passwords"
+msgstr "Anwendungspasswörter deaktivieren"
+
+msgid "Existing application passwords"
+msgstr "Vorhandene Anwendungspasswörter"
+
+msgid "No user has an application password."
+msgstr "Kein Benutzer hat ein Anwendungspasswort."
+
+msgid "User"
+msgstr "Benutzer"
+
+msgid "Role"
+msgstr "Rolle"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Created"
+msgstr "Erstellt"
+
+msgid "Last used"
+msgstr "Zuletzt verwendet"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "No role"
+msgstr "Keine Rolle"
+
+msgid "Never"
+msgstr "Nie"
+
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "To revoke an application password, open the profile of the user. The section is only shown there while application passwords are enabled for the role of the user."
+msgstr "Um ein Anwendungspasswort zu widerrufen, öffnen Sie das Profil des Benutzers. Der Abschnitt wird dort nur angezeigt, solange Anwendungspasswörter für die Rolle des Benutzers aktiviert sind."

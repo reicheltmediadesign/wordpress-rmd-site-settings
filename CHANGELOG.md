@@ -5,6 +5,10 @@ All notable changes to this plugin are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Application passwords tab: switch off application passwords per role (`wp_is_application_passwords_available_for_user`). Existing passwords of a switched-off role stop working without being deleted; users with several roles keep them as long as one role may use them. A table lists all existing application passwords with user, role, name, creation date, last use and status.
+
 ## [0.5.0] – 2026-11-14
 
 ### Added

@@ -14,6 +14,7 @@ Basic WordPress site settings in one place, for administrators: disable comments
 - **Admin area** – hide the welcome panel and the "WordPress Events and News" and "Quick Draft" widgets, set an own admin footer text.
 - **Menus for other roles** – let roles such as editors edit or view the navigation menus. They get an own *Menus* item in the admin menu; editing uses the WordPress menu screen without opening widgets, the Customizer or theme settings.
 - **Admin access for other roles** – give roles access to post types and to admin pages of plugins and the theme they cannot open otherwise, for example a theme options page for editors.
+- **Application passwords** – switch them off per role and see which users have application passwords, with role, creation date and last use.
 
 ## Usage
 
@@ -91,6 +92,16 @@ One row per role (administrators always have full access) with two lists. Items 
 | Admin pages | none | Top-level admin menu items of plugins and the theme (`admin.php?page=…`), including their subpages. The role sees the item in the admin menu and can open and save the page; the capabilities the page needs are granted only on that page and when its settings are saved, not elsewhere in the admin area. |
 
 Admin pages are listed as the admin menu looked for an administrator on their last visit to the admin area. Pages that need capabilities for users, roles, plugins, themes, updates or the network cannot be shared (*not possible: needs protected permissions*), and the WordPress settings screens and this plugin's settings cannot be saved this way. Actions of a shared page that run via AJAX or `admin-post.php` may still need the capability itself.
+
+### Application passwords
+
+One checkbox per role, administrators included. Users with several roles keep their application passwords as long as one of their roles may use them; users without a role are not affected.
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| Disable application passwords | off | Users of the role cannot sign in to the REST API or XML-RPC with an application password and no longer see the section in their profile. Existing application passwords stop working but are not deleted; they work again when the role is enabled. |
+
+Below the settings, *Existing application passwords* lists every application password on the site: user, role, name, creation date, last use and whether it is active or disabled by the role setting. To revoke one, open the user's profile while application passwords are enabled for their role.
 
 ## Privacy
 
